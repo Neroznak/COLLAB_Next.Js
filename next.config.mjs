@@ -15,7 +15,13 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'lh3.googleusercontent.com',
-            }
+            },
+            {
+                protocol: 'https',
+                hostname: 'img.icons8.com',
+                port: '',
+                pathname: '/**',
+            },
         ]
     },
     async rewrites() {
@@ -25,6 +31,15 @@ const nextConfig = {
                 destination: `${process.env.SERVER_URL}/uploads/:path*`,
             }
         ]
-    }
+    },
+    async redirects() {
+        return [
+            {
+                source: '/',
+                destination: '/auth',
+                permanent: true, // Если true, то редирект будет 301, если false — 302
+            },
+        ];
+    },
 };
 export default nextConfig;

@@ -1,0 +1,145 @@
+.wrapper {
+  @apply flex flex-row h-screen w-screen justify-center items-center;
+  //background-image: url("../../../public/assets/images/background.jpg");
+  background-color: #379683;
+  background-size: cover; /* изображение заполняет весь блок */
+  background-position: center; /* центрируем изображение */
+  background-repeat: no-repeat; /* не повторяем изображение */
+  height: 100vh; /* высота блока на весь экран */
+  width: 100%; /* ширина блока на всю ширину */
+
+
+  > .card {
+    @apply flex flex-col items-center;
+    width: 470px;
+    //height: 532px;
+    border-radius: 30px;
+    border:none;
+    margin-bottom: 148px;
+
+    > .content {
+      @apply flex flex-col;
+    }
+
+    > .logo {
+      @apply mt-6 w-full flex justify-center;
+    }
+
+    >.form {
+      @apply flex flex-col w-full px-10 pt-0.5;
+
+    }
+
+  }
+}
+
+
+/* Основной контейнер */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff7eb3, #ff758c);
+  font-family: Arial, sans-serif;
+}
+
+/* Блок формы */
+.login-box {
+  background: white;
+  border-radius: 15px;
+  padding: 30px 40px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+  @apply w-full bg-blue-500 text-white h-12 rounded-md;
+}
+
+.logo-text {
+  font-size: 32px;
+  font-weight: bold;
+  color: #0078FF;
+  position: relative;
+}
+
+.logo-text::after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  z-index: -1;
+}
+
+/* Поля ввода */
+.form_input {
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+
+}
+
+.password_label {
+  margin-top: 100px;
+}
+
+/* Кнопка отправки */
+.submit-button {
+  background-color: #0078FF;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: #0056c0;
+}
+
+/* Ссылка на восстановление пароля */
+.forgot-password {
+  text-align: right;
+  margin-top: 5px;
+}
+
+.forgot-password a {
+  font-size: 12px;
+  color: #0078FF;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Ссылки внизу формы */
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.footer-links a {
+  color: #0078FF;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
