@@ -1,4 +1,4 @@
-# Обучение FRONTEND NEXT.JS BUN. Настройка системы
+# FRONTEND NEXT.JS. Настройка системы
 1. **npm install -g bun** глобально на комп ставлю bun
 2. cd -> папка создания проекта -> **bun create next-app**
 3. √ What is your project named? ... next-learn
