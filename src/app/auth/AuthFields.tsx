@@ -28,16 +28,16 @@ export function AuthFields({
 			<FormField
 				control={form.control}
 
-				name='phoneNumber'
+				name='email'
 				rules={{
-					required: 'Телефон обязательна',
+					required: 'Почта обязательна',
 				}}
 				render={({ field }) => (
 					<FormItem>
 						<FormControl>
 							<Input
-								placeholder='+79169530222'
-								type='phoneNumber'
+								placeholder='admin@collab.com'
+								type='email'
 								className={styles.form_input}
 								disabled={isPending}
 								{...field}

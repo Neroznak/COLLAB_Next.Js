@@ -1,7 +1,7 @@
 "use client"
 
 import {useState} from "react";
-import {useAuthForm} from "@/app/auth/useAuthForm";
+import {useAuthForm} from "@/hooks/useAuthForm";
 import styles from "@/app/auth/Auth.module.scss";
 import {Card, CardContent, CardTitle} from "@/components/ui/Card";
 import {Form} from "@/components/ui/form-elements/Form";

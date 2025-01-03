@@ -17,6 +17,9 @@ const options: CreateAxiosDefaults = {
 }
 
 const axiosClassic = axios.create(options)
+
+// Фрагмент кода ниже настраивает использование Axios для отправки запросов с авторизацией, а также управляет обработкой ошибок, связанных с аутентификацией. 
+
 const axiosWithAuth = axios.create(options)
 
 axiosWithAuth.interceptors.request.use(config => {
