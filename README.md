@@ -1,4 +1,5 @@
-# Обучение FRONTEND NEXT.JS BUN. Настройка системы
+# FRONTEND NEXT.JS. Настройка системы
+
 1. **npm install -g bun** глобально на комп ставлю bun
 2. cd -> папка создания проекта -> **bun create next-app**
 3. √ What is your project named? ... next-learn
@@ -75,12 +76,12 @@ export const SITE_NAME = 'TeaShop'
 export const SITE_DESCRIPTION =
 'Добро пожаловать в наш интернет-магазин - уникальную платформу для комфортных и безопасных покупок, созданную с учетом современных тенденций и технологий.'`
 15. корректировки в layouts:
-    import type { Metadata } from "next";
+    `import type { Metadata } from "next";
     import localFont from "next/font/local";
     import "./globals.scss";
     import {GeistSans} from 'geist/font/sans'
     import {SITE_DESCRIPTION, SITE_NAME} from "@/constants/seo.constants";
-16. import { Providers } from "./providers";
+import { Providers } from "./providers";
 const geistSans = localFont({
 src: "./fonts/GeistVF.woff",
 variable: "--font-geist-sans",
@@ -94,7 +95,7 @@ weight: "100 900",
 export const metadata: Metadata = {
 title: {
 absolute: SITE_NAME,
-template: `%s | ${SITE_NAME}`,
+template: %s | ${SITE_NAME},
 },
 description: SITE_DESCRIPTION,
 };
@@ -103,12 +104,12 @@ children,
 }: Readonly<{
 children: React.ReactNode;
 }>) {
-return (`<html lang="ru">
+return (<html lang="ru">
 <body className={GeistSans.variable}><Providers>{children}</Providers>
 </body>
 </html>
 );
-}
+}`
 
 1.  app -> providers.tsx:
 `'use client'
