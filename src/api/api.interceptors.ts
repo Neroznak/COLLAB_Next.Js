@@ -1,6 +1,6 @@
 import axios, { CreateAxiosDefaults } from 'axios'
 
-import { SERVER_URL } from '@/config/api.config'
+import { SERVER_URL } from '@/api/api.config'
 
 import {
     getAccessToken,
@@ -18,7 +18,7 @@ const options: CreateAxiosDefaults = {
 
 const axiosClassic = axios.create(options)
 
-// Фрагмент кода ниже настраивает использование Axios для отправки запросов с авторизацией, а также управляет обработкой ошибок, связанных с аутентификацией. 
+// Фрагмент кода ниже настраивает использование Axios для отправки запросов с авторизацией, а также управляет обработкой ошибок, связанных с аутентификацией.
 
 const axiosWithAuth = axios.create(options)
 

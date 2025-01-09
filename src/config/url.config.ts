@@ -8,9 +8,9 @@ export const PUBLIC_URL = {
     user: () => PUBLIC_URL.root('/profile'),
 }
 
-export const CHAT_URL = {
-    root: (url = '') => `/chats${url ? url : ''}`,
+export const DASHBOARD_URL = {
+    root: (url = '') => `/dashboard${url ? url : ''}`,
 
-    home: () => CHAT_URL.root('/'),
+    home: () => DASHBOARD_URL.root('/'),
 }
 

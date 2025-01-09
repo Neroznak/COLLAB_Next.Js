@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { CHAT_URL } from '@/config/url.config'
+import {DASHBOARD_URL} from '@/config/url.config'
 
 import { authService } from '@/services/auth/auth.service'
 
@@ -23,7 +23,7 @@ export function useAuthForm(isReg: boolean) {
         onSuccess() {
             form.reset()
             toast.success('Успешная авторизация')
-            router.replace(CHAT_URL.home())
+            router.replace(DASHBOARD_URL.home())
         },
         onError(error) {
             if (error.message) {

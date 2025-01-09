@@ -1,6 +1,6 @@
 import {axiosWithAuth} from '@/api/api.interceptors'
 
-import {API_URL} from '@/config/api.config'
+import {API_URL} from '@/api/api.config'
 import {IMessage} from "@/shared/types/message.interface";
 
 // Нужно прописать функцию для каждой функции в контроллере backend'а

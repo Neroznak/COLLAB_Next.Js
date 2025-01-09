@@ -7,6 +7,7 @@ import {Card, CardContent, CardTitle} from "@/components/ui/Card";
 import {Form} from "@/components/ui/form-elements/Form";
 import Link from "next/link";
 import AuthFields from "@/app/auth/AuthFields";
+import {Button} from "@/components/ui/Button";
 
 export default function AuthPage() {
     const [isReg, setIsReg] = useState(false);
@@ -31,9 +32,9 @@ export default function AuthPage() {
                                 isPending={isPending}
                                 isReg={isReg}
                             />
-                            <button disabled={isPending}
+                            <Button disabled={isPending}
                                     className={"w-full bg-blue-500 text-white h-12 rounded-md mt-8"}>Go!
-                            </button>
+                            </Button>
                         </form>
                     </Form>
                 </CardContent>
