@@ -1,0 +1,42 @@
+.wrapper {
+  @apply w-screen h-screen flex flex-row;
+  background-color: #EDEEF0;
+}
+
+.sidebar {
+  @apply flex h-full;
+  background-color: #3D539F;
+  width: 407px;
+  border-bottom-right-radius: 50px;
+}
+
+.iconField {
+  @apply h-full;
+  width: 74px;
+  background-color: #5B74D8;
+  border-bottom-right-radius: 50px;
+}
+
+.active_sidebar {
+  @apply flex h-16 ml-3 items-center pl-2 font-semibold text-lg;
+  background-color: #EDEEF0;
+  color: #3D539F;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.passive_sidebar {
+  @apply flex h-16 ml-3 items-center pl-2 text-white font-semibold text-lg;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.main_board {
+  @apply flex flex-col h-full;
+  width: 64%;
+}
+
+.achievement {
+  @apply flex flex-col gap-3;
+  width: 83%;
+}
