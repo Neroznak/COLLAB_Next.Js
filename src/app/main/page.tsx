@@ -1,126 +1,358 @@
-import {Sidebar} from "@/app/dashboard/sidebar";
-import {Card} from "@/components/ui/Card";
+"use client"
+
 import styles from "@/app/main/Main.module.scss";
-import {Header} from "@/app/dashboard/header";
 import {Zain} from '@next/font/google';
-import {Button} from "@/components/ui/Button";
 import Link from "next/link";
+import React, {useState} from "react";
+
 
 const zain = Zain({
     subsets: ['latin'], // Добавьте 'cyrillic', чтобы поддерживать русский текст
-    weight: ['400', '700'], // Укажите нужные веса шрифта
+    weight: ['800'], // Укажите нужные веса шрифта
 });
 
 
 export default function Main() {
+    const [activeButton, setActiveButton] = useState<number | null>(null);
+    const [activeButton2, setActiveButton2] = useState<number | null>(null);
+    const handleButtonClick = (index: number) => {
+        setActiveButton(index); // Устанавливаем индекс активной кнопки
+    };
+    const handleButtonClick2 = (index2: number) => {
+        setActiveButton2(index2); // Устанавливаем индекс активной кнопки
+    };
     return (
         <main className={styles.wrapper}>
-            <div className={styles.logo}>
-                <p className={zain.className}>Collabster</p>
-            </div>
             <div className={styles.container}>
-                <form action="" className={styles.search}>
-                    <input type={"text"} className={styles.input_searh}/>
-                    <input type={"text"} className={styles.input_searh}/>
-                    <button className={styles.go}>Go!</button>
-                    <Link href={"/collab/new"}>
-                        <button className={styles.create_collab}>Create new Collab</button>
-                    </Link>
-                </form>
+                <div className={styles.header}>
+                    <p className={zain.className}>Collabster</p>
+                    <form action="">
+                        <input className={styles.input} placeholder={"освой сложную тему с новой командой!"}
+                               type="text"/>
+                    </form>
+                </div>
+                <div className={styles.categories}>
+                    {["Typescript", "Python", "Математика", "Физика", "Логика"].map((buttonText, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handleButtonClick(index)}
+                            className={` ${
+                                activeButton === index ? styles.category_active : styles.category
+                            }`}
+                        >
+                            {buttonText}
+                        </button>
+                    ))}
+                </div>
+
+                <div className={styles.hardness}>
+                    {["Простые", "Средние", "Сложные"].map((buttonText, index2) => (
+                        <button
+                            key={index2}
+                            onClick={() => handleButtonClick2(index2)}
+                            className={` ${
+                                activeButton2 === index2 ? styles.category_active : styles.category
+                            }`}
+                        >
+                            {buttonText}
+                        </button>
+                    ))}
+                </div>
+
                 <div className={styles.collabs_fields}>
-                    <p className={"mt-6 font-bold text-2xl"}>Free collabs</p>
-                    <Link href={"/collab"}>
-                        <div className={styles.collab}>
-                            <p>Collab name</p>
-                            <p>Category:</p>
-                            <p>Topic:</p>
-                            <p>Collabers:</p>
-                        </div>
-                    </Link>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={"flex justify-between"}>
+                        <p className={"font-bold text-2xl"}>Free collabs</p>
+                        <Link href={"/collab/new"}>
+                            <button className={"mr-8 pt-1 pb-1 pl-2 pr-2"}>Создать collab</button>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={styles.collab}>
-                        <p>Collab name</p>
-                        <p>Category:</p>
-                        <p>Topic:</p>
-                        <p>Collabers:</p>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
                     </div>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
+                    </div>
+                    <div className={styles.collab_block}>
+                        <Link href={"/collab"}>
+                            <div className={styles.collab}>
+                                <div className={"flex flex-col w-1/3"}>
+                                    <p className={styles.collab_name}>Анализ массива чисел</p>
+                                    <p className={"text-sm font-bold"}>Category: Typescript</p>
+                                </div>
+                                <div className={"flex flex-col w-1/4 text-xs"}>
+                                    <p className={"text-xs font-semibold"}>Сложность: High</p>
+                                    <p className={"text-xs font-semibold"}>Студентов: 4</p>
+                                    <p className={"text-xs font-semibold"}>Задача решается: 1 hour+</p>
+                                </div>
+                                <div className={"flex items-center text-xs"}>
+                                    <p className={"text-gray-500"}>Напиши функцию, которая принимает строку и
+                                        подсчитывает количество гласных и
+                                        согласных букв в ней. Возвращай объект с результатами.</p></div>
+                            </div>
+                        </Link>
+                    </div>
+
+
                 </div>
             </div>
         </main>

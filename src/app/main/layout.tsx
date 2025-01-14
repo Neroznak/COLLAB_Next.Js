@@ -1,8 +1,8 @@
 import type {Metadata} from "next";
 import {SITE_DESCRIPTION, SITE_NAME} from "@/constants/seo.constants";
-import { Ruda } from '@next/font/google';
+import { Roboto } from '@next/font/google';
 
-const ruda = Ruda({
+const roboto = Roboto({
     subsets: ['latin', 'cyrillic'], // Добавьте 'cyrillic', чтобы поддерживать русский текст
     weight: ['400', '700'], // Укажите нужные веса шрифта
 });
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <html lang="ru">
-        <body className={ruda.className}> {children}</body>
+        <body className={roboto.className}> {children}</body>
         </html>
     );
 }
