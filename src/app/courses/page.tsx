@@ -1,20 +1,40 @@
 import {Sidebar} from "@/app/dashboard/sidebar";
-import {Card} from "@/components/ui/Card";
-import styles from "@/app/dashboard/Dashboard.module.scss";
+import styles from "@/app/courses/Courses.module.scss";
 import {Header} from "@/app/dashboard/header";
 
-export default function Dashboard() {
+export default function Courses() {
     return (
         <div className={styles.wrapper}>
             <div className={styles.sidebar}>
                 <Sidebar/>
             </div>
             <div className={"flex flex-col w-full h-full"}>
-                <div className={"flex w-full h-12 bg-blue-500"}>
+                <div className={"flex w-full h-12"}>
                     <Header/>
                 </div>
                 <main className={"flex flex-row w-full h-full "}>
-                    COURSES PAGE
+                    <div className={"flex w-full bg-red-500"}>
+                        <div className={"flex bg-green-500"}>
+                            <div className={styles.search}></div>
+                        </div>
+                        <div className={styles.courses}>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+                            <div className={styles.course}></div>
+
+                        </div>
+                    </div>
                 </main>
             </div>
         </div>

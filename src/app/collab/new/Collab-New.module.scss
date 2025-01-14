@@ -1,0 +1,11 @@
+.wrapper {
+  @apply w-screen h-screen flex justify-center items-center;
+  background-color: #EDEEF0;
+}
+
+.block {
+  @apply flex flex-col bg-white rounded-2xl p-8;
+  width: 668px;
+  height: 584px;
+}
+

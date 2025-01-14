@@ -10,33 +10,17 @@
   border-bottom-right-radius: 50px;
 }
 
-.iconField {
-  @apply h-full;
-  width: 74px;
+.search {
+  @apply flex m-4 w-64;
   background-color: #5B74D8;
-  border-bottom-right-radius: 50px;
+  border-radius: 30px;
+  height: 90%;
 }
 
-.active_sidebar {
-  @apply flex h-16 ml-3 items-center pl-2 font-semibold text-lg;
-  background-color: #EDEEF0;
-  color: #3D539F;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
+.courses {
+  @apply flex flex-wrap h-full ml-48 gap-1 bg-amber-200
 }
 
-.passive_sidebar {
-  @apply flex h-16 ml-3 items-center pl-2 text-white font-semibold text-lg;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-}
-
-.main_board {
-  @apply flex flex-col h-full;
-  width: 64%;
-}
-
-.achievement {
-  @apply flex flex-col gap-3;
-  width: 83%;
+.course {
+  @apply flex w-full h-36 bg-white
 }

@@ -1,0 +1,20 @@
+.wrapper {
+  @apply w-screen h-screen flex;
+  background-color: #EDEEF0;
+}
+
+.sidebar {
+  @apply flex w-24;
+  background-color: #5B74D8;
+}
+
+.theory {
+  @apply flex bg-amber-50 h-full;
+  width: 1000px;
+}
+
+.chat {
+  @apply flex bg-green-100 h-full;
+  width: 600px;
+}
+

@@ -1,0 +1,37 @@
+.wrapper {
+  @apply w-screen flex flex-col  items-center;
+  background-color: #EDEEF0;
+}
+
+.logo {
+  @apply flex flex-col w-full h-20 justify-center items-center ;
+  color:#3D539F;
+  font-weight: bold;
+  font-size: 53px;
+}
+
+.container {
+  @apply flex flex-col w-2/3;
+}
+
+.search {
+ @apply flex flex-row bg-white justify-center gap-24 items-center rounded-3xl;
+  width: 975px;
+  height: 65px;
+}
+
+.input_searh{
+  @apply flex bg-gray-100 p-1 rounded w-48 justify-center items-center ml-3;
+  color: #5B74D8;
+
+}
+
+.collabs_fields {
+  @apply flex flex-col gap-3;
+}
+
+.collab {
+@apply flex flex-col bg-white rounded-2xl p-2
+}
+
+

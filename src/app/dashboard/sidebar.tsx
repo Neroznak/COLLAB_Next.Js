@@ -13,6 +13,7 @@ export const Sidebar: FC = () => {
                      <Link href="/dashboard"><div className={styles.active_sidebar}>Dashboard</div></Link>
                      <Link href="/courses"><div className={styles.passive_sidebar}>Courses</div></Link>
                      <Link href="/collab"><div className={styles.passive_sidebar}>Collab</div></Link>
+                     <Link href="/collab"><div className={styles.passive_sidebar}>Forum</div></Link>
                      <Link href="/settings"><div className={styles.passive_sidebar}>Settings</div></Link>
                  </nav>
                 <div className={"flex mt-auto w-full h-20 text-white justify-center items-center"}>Log Out</div>
