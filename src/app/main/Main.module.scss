@@ -1,5 +1,5 @@
 .wrapper {
-  @apply w-screen flex flex-col items-center;
+  @apply flex flex-col items-center;
   background-color: #F8FAFD;
 }
 
@@ -58,21 +58,17 @@
 }
 
 .collabs_fields {
-  @apply flex flex-col bg-white pl-12 pt-4 mt-4 pb-8 rounded-2xl;
+  @apply flex flex-col bg-white mt-4 rounded-2xl;
   border: 1px solid #cccccc;
-  min-height: 300px;
+  min-height: 540px;
 
 }
 
 
-.collab_block {
-  @apply flex flex-col mt-2;
-}
 
 .collab {
-  @apply flex flex-row bg-white rounded-2xl p-2;
-  border: 1px solid #cccccc;
-  width: 1064px;
+  @apply flex flex-row bg-white p-2 w-full pl-12;
+  border-bottom: 1px solid #cccccc;
   height: 60px;
 
   &:hover {
@@ -85,6 +81,45 @@
     }
   }
 }
+
+.collab_first {
+  @apply flex flex-row bg-white p-2 w-full pl-12;
+  border-bottom: 1px solid #cccccc;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  height: 60px;
+
+  &:hover {
+    background-color: #3D539F; /* Изменение цвета фона */
+    color: white; /* Изменение цвета текста */
+
+    /* Для всех вложенных элементов, если нужно: */
+    * {
+      color: white; /* Устанавливает цвет текста для всех вложенных элементов */
+    }
+  }
+}
+
+
+.collab_last {
+  @apply flex flex-row bg-white p-2 w-full pl-12;
+  height: 60px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border-bottom: 1px solid #cccccc;
+
+
+  &:hover {
+    background-color: #3D539F; /* Изменение цвета фона */
+    color: white; /* Изменение цвета текста */
+
+    /* Для всех вложенных элементов, если нужно: */
+    * {
+      color: white; /* Устанавливает цвет текста для всех вложенных элементов */
+    }
+  }
+}
+
 
 
 

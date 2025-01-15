@@ -1,20 +1,80 @@
 .wrapper {
-  @apply w-screen h-screen flex;
-  background-color: #EDEEF0;
+  @apply flex h-screen;
+  //min-height: 100vh; /* Минимальная высота экрана */
+
+
 }
 
 .sidebar {
-  @apply flex w-24;
-  background-color: #5B74D8;
+  @apply flex flex-col h-full;
+  background-color: #3D539F;
+  width: 160px;
 }
 
-.theory {
-  @apply flex bg-amber-50 h-full;
-  width: 1000px;
+.image_field {
+  @apply flex bg-gray-300 rounded-3xl justify-center items-center text-xs;
+  color: #3D539F;
+
+  height: 60px;
+  width: 60px;
+}
+
+.logo_font {
+  @apply text-white font-bold flex justify-center mt-3;
+  font-size: 26px;
+}
+
+.content {
+  @apply flex  h-full w-full;
+  background-color: #F8FAFD;
+
+
+}
+
+
+.task {
+  @apply flex flex-col p-6 pt-3 ;
+  min-height: 180px;
+}
+
+.black_field {
+  @apply flex flex-col p-6 pt-3 ;
+  min-height: 300px;
+}
+
+.result {
+  @apply flex flex-col p-6 pt-3 ;
+  min-height: 200px;
+}
+
+
+.input_black {
+  @apply bg-white w-full border rounded;
+  min-height: 250px;
+}
+
+.input_result {
+  @apply bg-white w-full border rounded;
+  min-height: 100px;
 }
 
 .chat {
-  @apply flex bg-green-100 h-full;
-  width: 600px;
+  @apply flex h-full;
+  width: 560px;
+  background-color: #F8FAFD;
+}
+
+.message_field{
+  @apply flex  w-full justify-center items-center text-xl font-bold;
+  height: 900px;
+}
+
+.send_field {
+  @apply flex bg-green-100 w-full justify-center items-center;
+  height: 100px;
+}
+
+.send_input{
+  @apply pl-4 border rounded w-full h-full;
 }
 
