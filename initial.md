@@ -140,7 +140,7 @@ refetchOnWindowFocus: false // при изменении фокуса окна �
 		</QueryClientProvider>
 	)
 }`
-2. src -> app -> (root) -> page.tsx:
+2. src -> app -> (root) -> table.tsx:
 
 
 

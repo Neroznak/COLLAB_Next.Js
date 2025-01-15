@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <html lang="ru">
-        <body className={roboto.className}>{children}</body>
+        <body className={roboto.className}> {children}</body>
         </html>
     );
 }

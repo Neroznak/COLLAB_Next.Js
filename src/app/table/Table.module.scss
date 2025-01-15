@@ -1,24 +1,25 @@
 .wrapper {
-  @apply flex items-center justify-center h-screen;
+  @apply flex flex-col items-center;
   background-color: #F8FAFD;
 }
 
 
 .container {
-  @apply flex flex-col items-center h-screen;
-  width: 860px;
+  @apply flex flex-col mb-4;
+  width: 1160px;
+  min-height: 100vh;
 }
 
 .header {
-@apply  mt-16;
+  @apply flex w-full h-20 items-center ;
   color:#3D539F;
   font-weight: bold;
-  font-size: 80px;
+  font-size: 50px;
 }
 
 
 .input{
-  @apply flex bg-white pl-4 justify-center items-center ml-8 mt-4;
+  @apply flex bg-white pl-4 justify-center items-center ml-8;
   border: 1px solid #cccccc;
   height: 38px;
   width: 464px;
@@ -30,7 +31,7 @@
 
 
 .categories {
-  @apply flex gap-4 mt-8;
+  @apply flex gap-4
 }
 
 .hardness {
