@@ -65,7 +65,7 @@ export default function Main() {
                            type="text"/>
                 </form>
                 <Link href={"/collab"}>
-                    <button className={"mt-4 pt-1 pb-1 pl-2 pr-2"}>Начать занятия</button>
+                    <button className={"mt-4 pt-1 pb-1 pl-2 pr-2"}>Начать занятие</button>
                 </Link>
                 <div className={"flex mt-auto mb-4 gap-4"}>
                     <p>Telegram</p>

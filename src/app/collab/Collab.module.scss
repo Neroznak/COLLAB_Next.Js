@@ -1,8 +1,6 @@
 .wrapper {
   @apply flex h-screen;
   //min-height: 100vh; /* Минимальная высота экрана */
-
-
 }
 
 .sidebar {
@@ -11,13 +9,13 @@
   width: 160px;
 }
 
-.image_field {
-  @apply flex bg-gray-300 rounded-3xl justify-center items-center text-xs;
-  color: #3D539F;
+//bg-gray-300 rounded-3xl justify-center items-center text-xs;
 
-  height: 60px;
-  width: 60px;
+.avatar_container {
+  @apply flex flex-col justify-center items-center gap-8 h-full;
+
 }
+
 
 .logo_font {
   @apply text-white font-bold flex justify-center mt-3;
@@ -27,25 +25,26 @@
 .content {
   @apply flex  h-full w-full;
   background-color: #F8FAFD;
+  overflow-y: auto; /* Появление ползунка, если контент больше 400px */
 
 
 }
 
 
 .task {
-  @apply flex flex-col p-6 pt-3 ;
-  min-height: 180px;
-}
+  @apply flex flex-col p-6 pt-3;
+  font-family: "Roboto Th";
 
-.black_field {
-  @apply flex flex-col p-6 pt-3 ;
-  min-height: 300px;
 }
 
 .result {
-  @apply flex flex-col p-6 pt-3 ;
-  min-height: 200px;
+  @apply flex flex-col p-6 pt-3 mt-1 ;
+  width: 1000px;
+  //min-height: 0px;
+  //max-height: 590px;
 }
+
+
 
 
 .input_black {
@@ -70,11 +69,11 @@
 }
 
 .send_field {
-  @apply flex bg-green-100 w-full justify-center items-center;
+  @apply flex w-full justify-center items-center;
   height: 100px;
 }
 
 .send_input{
-  @apply pl-4 border rounded w-full h-full;
+  @apply pl-4 border w-full h-full;
 }
 

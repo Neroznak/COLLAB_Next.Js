@@ -1,0 +1,42 @@
+.avatarContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar {
+  @apply flex pl-4 pt-6;
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  background-color: #F8FAFD;
+  border: 1px solid #ccc;
+}
+
+/* Иконка микрофона */
+.micIcon {
+  position: absolute; /* Для размещения относительно .avatarContainer */
+  bottom: -10px; /* Сместить вниз */
+  left: 50%; /* Центрировать по горизонтали */
+  transform: translateX(-50%); /* Сдвиг для точного центрирования */
+  width: 37px;
+  height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: none; /* Скрыта по умолчанию */
+  z-index: 10;
+}
+
+/* Зеленый микрофон */
+.micGreen {
+  background-color: green;
+}
+
+/* Красный микрофон */
+.micRed {
+  background-color: red;
+}
+
+/* Показать микрофон при наведении на контейнер */
+.avatarContainer:hover .micIcon {
+  display: block;
+}
