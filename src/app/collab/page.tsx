@@ -5,8 +5,6 @@ import {Zain} from "@next/font/google";
 import CodeMirror from "@uiw/react-codemirror";
 import {javascript} from "@codemirror/lang-javascript";
 import Link from "next/link";
-import avatar from "../../../public/assets/images/avatar.png"
-import Image from "next/image";
 import AvatarWithMic from "@/components/ui/AvatarWithMic";
 import {useEffect, useState} from "react";
 
@@ -19,23 +17,18 @@ const zain = Zain({
 
 export default function Collab() {
 
-    const micIcon = document.getElementById("mic-icon");
-    const [micActive, setMicActive] = useState(true);
-
-    const toggleMic = () => {
-        setMicActive((prevState) => !prevState);
-    };
+    const [micActive, setMicActive] = useState(false); // Изначально микрофон выключен
 
     useEffect(() => {
-        // Проверяем, что код выполняется на клиенте
+        // Проверка, что код выполняется только на клиенте
         if (typeof window !== "undefined") {
             const micIcon = document.getElementById("mic-icon");
             if (micIcon) {
-                micIcon.addEventListener("click", toggleMic);
+                micIcon.addEventListener("click", () => setMicActive(prevState => !prevState));
             }
             return () => {
                 if (micIcon) {
-                    micIcon.removeEventListener("click", toggleMic);
+                    micIcon.removeEventListener("click", () => setMicActive(prevState => !prevState));
                 }
             };
         }
