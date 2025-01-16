@@ -8,6 +8,7 @@ import Link from "next/link";
 import avatar from "../../../public/assets/images/avatar.png"
 import Image from "next/image";
 import AvatarWithMic from "@/components/ui/AvatarWithMic";
+import {useEffect, useState} from "react";
 
 
 const zain = Zain({
@@ -19,12 +20,26 @@ const zain = Zain({
 export default function Collab() {
 
     const micIcon = document.getElementById("mic-icon");
+    const [micActive, setMicActive] = useState(true);
 
-    if (micIcon) {
-        micIcon.addEventListener("click", () => {
-            micIcon.classList.toggle("red");
-        });
-    }
+    const toggleMic = () => {
+        setMicActive((prevState) => !prevState);
+    };
+
+    useEffect(() => {
+        // Проверяем, что код выполняется на клиенте
+        if (typeof window !== "undefined") {
+            const micIcon = document.getElementById("mic-icon");
+            if (micIcon) {
+                micIcon.addEventListener("click", toggleMic);
+            }
+            return () => {
+                if (micIcon) {
+                    micIcon.removeEventListener("click", toggleMic);
+                }
+            };
+        }
+    }, []);
 
     return (
         <main className={styles.wrapper}>
