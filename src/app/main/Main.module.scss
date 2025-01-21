@@ -1,6 +1,6 @@
 .wrapper {
   @apply flex items-center justify-center h-screen;
-  background-color: #F8FAFD;
+  background-color: #F8F6FF;
 }
 
 
@@ -11,7 +11,7 @@
 
 .header {
 @apply  mt-16;
-  color:#3D539F;
+  color:#7552E9;
   font-weight: bold;
   font-size: 80px;
 }
@@ -49,7 +49,7 @@
 
 .category_active {
   @apply flex pl-2 pr-2 pt-1 pb-1;
-  background-color: #3D539F;
+  background-color: #7552E9;
   color: white;
   border: 1px solid #cccccc;
   border-radius: 12px;
@@ -71,7 +71,7 @@
   height: 60px;
 
   &:hover {
-    background-color: #3D539F; /* Изменение цвета фона */
+    background-color: #7552E9; /* Изменение цвета фона */
     color: white; /* Изменение цвета текста */
 
     /* Для всех вложенных элементов, если нужно: */
@@ -89,7 +89,7 @@
   height: 60px;
 
   &:hover {
-    background-color: #3D539F; /* Изменение цвета фона */
+    background-color: #7552E9; /* Изменение цвета фона */
     color: white; /* Изменение цвета текста */
 
     /* Для всех вложенных элементов, если нужно: */

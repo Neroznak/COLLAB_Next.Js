@@ -24,12 +24,18 @@ export default function Main() {
     return (
         <main className={styles.wrapper}>
             <div className={styles.container}>
-                <p className={"mt-16 text-sm"}>Тот, кто делает всё сам, и получает всё сам. Но тот, кто делится, выигрывает
+                <p className={"mt-16 text-sm"}>Тот, кто делает всё сам, и получает всё сам. Но тот, кто делится,
+                    выигрывает
                     вдвойне.</p>
                 <div className={styles.header}>
                     <p className={zain.className}>Collabster</p>
                 </div>
-                <p className={"text-xs"}>Выбери направление и свой уровень подготовки и начни заниматься с новыми друзьями! </p>
+                <p className={"text-xs"}>Выбери направление и свой уровень подготовки и начни заниматься с новыми
+                    друзьями! </p>
+
+
+
+
                 <div className={styles.categories}>
                     {["Typescript", "Python", "Математика", "Физика", "Логика"].map((buttonText, index) => (
                         <button
@@ -57,15 +63,18 @@ export default function Main() {
                             </button>
                         ))}
                     </div>
-
-
                 </div>
+
+
+
+
+
                 <form action="">
                     <input className={styles.input} placeholder={"Введите Ваше имя"}
                            type="text"/>
                 </form>
                 <Link href={"/collab"}>
-                    <button className={"mt-4 pt-1 pb-1 pl-2 pr-2"}>Начать занятие</button>
+                    <button className={"mt-4 text-sm pt-2 pb-2 pl-2 pr-2 rounded-xl"}>Начать занятие</button>
                 </Link>
                 <div className={"flex mt-auto mb-4 gap-4"}>
                     <p>Telegram</p>

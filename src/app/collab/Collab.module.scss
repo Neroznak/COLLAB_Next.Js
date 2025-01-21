@@ -4,27 +4,28 @@
 }
 
 .sidebar {
-  @apply flex flex-col h-full;
-  background-color: #3D539F;
-  width: 160px;
+  @apply flex flex-col h-full border-r;
+  border-color:#CCCCCC;
+  background-color: #F8F6FF;
+  width: 136px;
 }
 
 //bg-gray-300 rounded-3xl justify-center items-center text-xs;
 
 .avatar_container {
-  @apply flex flex-col justify-center items-center gap-8 h-full;
+  @apply flex flex-col justify-center items-center gap-4 h-full;
 
 }
 
 
 .logo_font {
   @apply text-white font-bold flex justify-center mt-3;
-  font-size: 26px;
+  font-size: 20px;
+  color:#7552E9;
 }
 
 .content {
-  @apply flex  h-full w-full;
-  background-color: #F8FAFD;
+  @apply flex h-full w-full;
   overflow-y: auto; /* Появление ползунка, если контент больше 400px */
 
 
@@ -32,10 +33,14 @@
 
 
 .task {
-  @apply flex flex-col p-6 pt-3;
+  @apply flex flex-col pl-5 pt-3;
   font-family: "Roboto Th";
+  min-height: 210px;
+  height: auto; /* Гарантирует, что высота будет автоматически подстраиваться */
 
 }
+
+
 
 .result {
   @apply flex flex-col p-6 pt-3 mt-1 ;
@@ -47,20 +52,21 @@
 
 
 
-.input_black {
-  @apply bg-white w-full border rounded;
-  min-height: 250px;
-}
-
-.input_result {
-  @apply bg-white w-full border rounded;
-  min-height: 100px;
-}
+//.input_black {
+//  @apply bg-white w-full border rounded;
+//  min-height: 250px;
+//}
+//
+//.input_result {
+//  @apply bg-white w-full border rounded;
+//  min-height: 100px;
+//}
 
 .chat {
-  @apply flex h-full;
-  width: 560px;
-  background-color: #F8FAFD;
+  @apply flex h-full border-l;
+  width:625px;
+  border-color:#CCCCCC;
+  background-color: #F8F6FF;
 }
 
 .message_field{
@@ -77,3 +83,6 @@
   @apply pl-4 border w-full h-full;
 }
 
+.chat_header{
+  @apply flex flex-row p-4 justify-between bg-white
+}
