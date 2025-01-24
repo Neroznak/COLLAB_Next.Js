@@ -1,12 +1,29 @@
 'use client';
 
-import styles from "@/app/collab/Collab.module.scss";
+import styles from "@/app/collab/[collabID]/Collab.module.scss";
 import {Zain} from "@next/font/google";
 import CodeMirror from "@uiw/react-codemirror";
 import {javascript} from "@codemirror/lang-javascript";
 import Link from "next/link";
-import AvatarWithMic from "@/components/ui/AvatarWithMic";
 import {useEffect, useState} from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import * as React from "react"
+import {
+    ResizableHandle,
+    ResizablePanel,
+    ResizablePanelGroup,
+} from "@/components/ui/resizable"
+import {useParams} from "next/navigation";
+
+
 
 
 const zain = Zain({
@@ -17,8 +34,9 @@ const zain = Zain({
 
 export default function Collab() {
 
-    const [micActive, setMicActive] = useState(false); // Изначально микрофон выключен
+    const { collabId } = useParams(); // Извлекаем параметр collabId
 
+    const [micActive, setMicActive] = useState(false); // Изначально микрофон выключен
     useEffect(() => {
         // Проверка, что код выполняется только на клиенте
         if (typeof window !== "undefined") {
@@ -47,23 +65,60 @@ export default function Collab() {
                     <p className={zain.className}>Collabster</p>
                 </div>
                 <div className={styles.avatar_container}>
-                    <AvatarWithMic avatarUrl="../../../public/assets/images/avatar.png"/>
-                    <AvatarWithMic avatarUrl="../../../public/assets/images/avatar.png"/>
-                    <AvatarWithMic avatarUrl="../../../public/assets/images/avatar.png"/>
-                    <AvatarWithMic avatarUrl="../../../public/assets/images/avatar.png"/>
-                    <AvatarWithMic avatarUrl="../../../public/assets/images/avatar.png"/>
+                    <Avatar>
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <Avatar>
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <Avatar>
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <Avatar>
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <Avatar>
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    {/*<AvatarWithMic avatarUrl="../../../public/assets/images/avatar.png"/>*/}
+                    {/*<AvatarWithMic avatarUrl="../../../public/assets/images/avatar.png"/>*/}
+                    {/*<AvatarWithMic avatarUrl="../../../public/assets/images/avatar.png"/>*/}
+                    {/*<AvatarWithMic avatarUrl="../../../public/assets/images/avatar.png"/>*/}
+                    {/*<AvatarWithMic avatarUrl="../../../public/assets/images/avatar.png"/>*/}
                 </div>
                 <Link href={"/"}>
                     <div className={"flex mt-auto mb-4 justify-center w-full text-black text-sm "}><p>04:24</p></div>
                     <div className={"flex mt-auto mb-4 justify-center w-full text-black text-sm "}><p>Сдаться</p></div>
                 </Link>
             </aside>
-            <div className={styles.content}>
+            {/*<ResizablePanelGroup direction="horizontal">*/}
+            {/*    <ResizablePanel>*/}
+                    <div className={styles.content}>
                 <div className={"flex flex-col border-r w-full"}>
                     <div className={"flex justify-between"}>
-                        <div className={"flex"}>
-                            <p className={"pl-4 font-bold  pt-2 text-xs text-gray-400"}>TypeScript / Junior / </p>
-                            <p className={"pl-1  font-bold  pt-2 text-xs"}>Циклы</p>
+                        <div className={"flex pt-2 pl-4"}>
+                            {/*<p className={"pl-4 font-bold  pt-2 text-xs text-gray-400"}>TypeScript / Junior / </p>*/}
+                            {/*<p className={"pl-1  font-bold  pt-2 text-xs"}>Циклы</p>*/}
+                            <Breadcrumb>
+                                <BreadcrumbList>
+                                    <BreadcrumbItem>
+                                        <BreadcrumbLink href="/">TypeScript</BreadcrumbLink>
+                                    </BreadcrumbItem>
+                                    <BreadcrumbSeparator />
+                                    <BreadcrumbItem>
+                                        <BreadcrumbLink href="/components">Junior</BreadcrumbLink>
+                                    </BreadcrumbItem>
+                                    <BreadcrumbSeparator />
+                                    <BreadcrumbItem>
+                                        <BreadcrumbPage>Циклы</BreadcrumbPage>
+                                    </BreadcrumbItem>
+                                </BreadcrumbList>
+                            </Breadcrumb>
                         </div>
                         <button className={"h-8 font-light mr-2 mt-2"}>К теории</button>
                     </div>
@@ -97,7 +152,10 @@ export default function Collab() {
 
                 </div>
             </div>
-            <div className={styles.chat}>
+                {/*</ResizablePanel>*/}
+                {/*<ResizableHandle withHandle />*/}
+                {/*<ResizablePanel>*/}
+                    <div className={styles.chat}>
                 <div className={"flex w-full flex-col"}>
                     <div className={styles.chat_header}>
                         <p className={"text-2xl font-bold"}>Collab</p>
@@ -112,6 +170,8 @@ export default function Collab() {
 
                 </div>
             </div>
+            {/*    </ResizablePanel>*/}
+            {/*</ResizablePanelGroup>*/}
         </main>
 
     )

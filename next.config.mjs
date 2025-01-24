@@ -6,6 +6,7 @@ const nextConfig = {
         APP_DOMAIN:process.env.APP_DOMAIN,
         SERVER_URL:process.env.SERVER_URL,
     },
+
     images: {
         remotePatterns: [
             {
