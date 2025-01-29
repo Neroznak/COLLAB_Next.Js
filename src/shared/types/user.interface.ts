@@ -1,5 +1,5 @@
 export interface IUser {
     id: number,
-    displayName: string;
-    username: string,
+    userName: string,
+    profilePictureUrl: string,
 }

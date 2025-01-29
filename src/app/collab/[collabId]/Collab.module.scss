@@ -1,0 +1,178 @@
+.wrapper {
+  @apply flex h-screen;
+  //min-height: 100vh; /* Минимальная высота экрана */
+}
+
+.sidebar {
+  @apply flex flex-col h-full border-r;
+  border-color:#CCCCCC;
+  background-color: #F8F6FF;
+  width: 136px;
+}
+
+//bg-gray-300 rounded-3xl justify-center items-center text-xs;
+
+.avatar_container {
+  @apply flex flex-col justify-center items-center gap-8 h-full text-xs w-full;
+
+}
+
+.avatar_block {
+  @apply flex flex-col justify-center items-center text-xs w-full;
+
+}
+
+
+.logo_font {
+  @apply text-white font-bold flex justify-center mt-3;
+  font-size: 20px;
+  color:#7552E9;
+}
+
+.content {
+  @apply flex h-full w-full flex-col border-r;
+  overflow-y: auto; /* Появление ползунка, если контент больше 400px */
+}
+
+
+
+.over_text {
+  @apply text-center;
+  font-size: 1em; /* Начальный размер текста */
+  white-space: nowrap;        /* Запрещает перенос текста на новую строку */
+  overflow: hidden;           /* Обрезает текст, если он выходит за пределы блока */
+  text-overflow: ellipsis;    /* Добавляет '...' в конце текста, если он обрезается */
+  width: 80px;               /* Установи ширину блока по твоим нуждам */
+  display: inline-block;      /* Если это блок с текстом */
+}
+
+
+
+.task {
+  @apply flex flex-col pl-5 pt-3;
+  font-family: "Roboto Th";
+  max-width: 100%; /* Максимальная ширина блока равна ширине родителя */
+  width: 100%;     /* Блок будет занимать всю доступную ширину родителя */
+  overflow-x:hidden
+}
+
+
+.theory {
+  @apply pl-5 pt-3;
+  font-family: "Roboto Th";
+  max-width: 100%; /* Максимальная ширина блока равна ширине родителя */
+  width: 100%;     /* Блок будет занимать всю доступную ширину родителя */
+  overflow-x:hidden
+}
+
+
+.result {
+  @apply flex flex-col p-6 pt-3 ;
+  //min-height: 0px;
+  //max-height: 590px;
+}
+
+
+
+
+//.input_black {
+//  @apply bg-white w-full border rounded;
+//  min-height: 250px;
+//}
+//
+//.input_result {
+//  @apply bg-white w-full border rounded;
+//  min-height: 100px;
+//}
+
+
+.chat {
+  @apply flex h-full  flex-col w-full border-l;
+  max-width:425px;
+  overflow-x: hidden;
+  border-color:#CCCCCC;
+  background-color: #F8F6FF;
+}
+
+.message_field{
+  @apply flex flex-col w-full;
+}
+
+.message_block {
+  @apply flex text-xs font-medium ml-2;
+  display: inline-block; /* Блок занимает столько места, сколько нужно для текста */
+  max-width: 350px; /* Максимальная ширина блока сообщений */
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 5px;
+  border: 1px solid #CCCCCC;
+  background-color: #ffffff; /* Цвет для сообщений, отправленных другим пользователем */
+  word-wrap: break-word; /* Перенос слов, если они слишком длинные */
+}
+
+
+//.send_field {
+//  @apply flex w-full justify-center items-center;
+//  min-height: 60px;
+//  margin-top: auto; /* Прижимает элемент к низу */
+//
+//}
+//
+//.send_input{
+//  @apply flex pl-4 border w-full h-full text-sm font-medium;
+//  outline: none; /* Убирает контур при фокусе */
+//  word-wrap: break-word; /* Переносит длинные слова на новую строку */
+//  width: 100%; /* Заполняет всю доступную ширину */
+//  box-sizing: border-box; /* Чтобы padding не увеличивал размер */
+//  font-size: 14px;
+//  line-height: 1.5;
+//  resize: none; /* Запрещает изменение размера вручную */
+//  overflow-y: hidden; /* Скрывает вертикальную прокрутку */
+//  min-height: 60px;
+//  scrollbar-width: none;
+//
+//
+//}
+
+
+/* Стиль для родительского контейнера */
+.send_field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  margin-top: auto; /* Прижимает к низу */
+}
+
+/* Стиль для самого поля ввода */
+.input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc; /* Граница для поля */
+  border-radius: 10px; /* Округлые углы */
+  outline: none; /* Убирает контур при фокусе */
+  background-color: #ffffff; /* Цвет фона */
+  transition: border-color 0.3s ease; /* Плавное изменение цвета при фокусе */
+  word-wrap: break-word; /* Перенос длинных слов */
+  white-space: normal; /* Чтобы текст не обрезался на одной строке */
+  min-height: 20px; /* Минимальная высота поля */
+  height: auto; /* Автоматическая высота, зависит от содержания */
+  overflow-y: auto;
+  margin-top: auto; /* Прижимает к низу */
+  max-height: 575px;
+
+}
+
+/* При фокусе на поле, меняем цвет границы */
+.send_input:focus {
+  border-color: #007bff; /* Цвет границы при фокусе */
+  background-color: #fff; /* Меняем фон на белый при фокусе */
+}
+
+
+
+.chat_header{
+  @apply flex flex-row p-4 justify-between bg-white
+}

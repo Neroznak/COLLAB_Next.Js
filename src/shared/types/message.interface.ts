@@ -1,8 +1,3 @@
-export interface MessagesPropsForHeader {
-    chatId: number;
-    chatName: string;
-}
-
 export interface IMessage {
     messageId: number;
     userId: number;
@@ -10,9 +5,8 @@ export interface IMessage {
 }
 
 export interface MessagesProps {
-    chatId: number;
+    collabId: number;
     userId: number
-
 }
 
 // export interface IUserChatCreate extends Pick <IUserChat, 'User'> {} Если надо выбрать только одно поле

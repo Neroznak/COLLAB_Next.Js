@@ -6,30 +6,8 @@ import React, {useEffect, useState} from "react";
 import {QuoteInterface} from "@/shared/types/quote.interface";
 import {quoteService} from "@/services/quote.service";
 import {API_URL} from "@/api/api.config";
-import {Check, ChevronsUpDown} from "lucide-react"
-
-import {cn} from "@/lib/utils"
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from "@/components/ui/command"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import {Button} from "@/components/ui/Button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
 
-
-const zain = Zain({
-    subsets: ['latin'], // Добавьте 'cyrillic', чтобы поддерживать русский текст
-    weight: ['800'], // Укажите нужные веса шрифта
-});
 // const categories = [
 //     {
 //         value: "TypeScript",
@@ -108,7 +86,7 @@ export default function Main() {
     const [category, setCategory] = useState(""); // Категория
     const [difficulty, setDifficulty] = useState(""); // Сложность
     const [title, setTitle] = useState(""); // Тема
-    const [userName, setUserName] = useState('');
+    const [userName, setUserName] = useState("Интеллектус");
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // Предотвращаем перезагрузку страницы
@@ -224,7 +202,6 @@ m231 -365 c34 -22 67 -83 67 -125 l0 -30 -190 0 c-104 0 -190 2 -190 4 0 2 7
                     <p className={"text-xs text-black"}>Выбери направление и свой уровень подготовки и начни
                         заниматься с новыми друзьями! </p>
                 </div>
-
                 {/*Там мудрённый вариант всплывающих списков                /!*<div className={"flex flex-row mt-4"}>*!/*/}
                 {/*/!*    <Popover open={open} onOpenChange={setOpen}>*!/*/}
                 {/*/!*        <PopoverTrigger asChild>*!/*/}
@@ -357,7 +334,6 @@ m231 -365 c34 -22 67 -83 67 -125 l0 -30 -190 0 c-104 0 -190 2 -190 4 0 2 7
                 {/*/!*    </Popover>*!/*/}
                 {/*/!*</div>*!/*/}
 
-
                 <form onSubmit={handleSubmit}>
                     {/*Всплывающие списки*/}
                     <div className={"flex flex-row mt-4 gap-1"}>
@@ -387,8 +363,8 @@ m231 -365 c34 -22 67 -83 67 -125 l0 -30 -190 0 c-104 0 -190 2 -190 4 0 2 7
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="Циклы">Циклы</SelectItem>
-                                <SelectItem value="Math">Операторы</SelectItem>
-                                <SelectItem value="Physic">Ассинхронность</SelectItem>
+                                <SelectItem value="Операторы">Операторы</SelectItem>
+                                <SelectItem value="Ассинхронность">Ассинхронность</SelectItem>
                             </SelectContent>
                         </Select>
 

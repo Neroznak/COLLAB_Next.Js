@@ -7,6 +7,7 @@ export const API_URL = {
     users: (url = '') => API_URL.root(`/users${url}`),
     chats: (url = '') => API_URL.root(`/chats${url}`),
     collab: (url = '') => API_URL.root(`/collab${url}`),
+    task: (url = '') => API_URL.root(`/task${url}`),
     quote: (url = '') => API_URL.root(`/quote${url}`),
     // dashboard: (url = '') => API_URL.root(`/dashboard${url}`),
     messages: (url = '') => API_URL.root(`/messages${url}`),
