@@ -1,6 +1,9 @@
+import {IUser} from "@/shared/types/user.interface";
+
 export interface IMessage {
     messageId: number;
     userId: number;
+    user: IUser;
     content: string;
 }
 

@@ -2,10 +2,12 @@ import {IUser} from "@/shared/types/user.interface";
 
 export interface CollabInterface {
     id: number
+    createdAt: Date
     name: string
     language: string
     isPassed: boolean
     taskId: number
+    hash: string
     user: ICollabUser[]
 }
 
@@ -19,6 +21,8 @@ export interface ICollabUser {
 
 export interface CollabProps {
     collab: CollabInterface; // Пропс должен быть объектом типа CollabInterface
+    user: IUser
+
 }
 
 

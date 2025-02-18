@@ -1,8 +1,13 @@
 import type {Metadata} from "next";
-import localFont from "next/font/local";
-import "./globals.scss";
+import "./global.scss";
 import {SITE_DESCRIPTION, SITE_NAME} from "@/constants/seo.constants";
 import {Providers} from "./providers";
+import {Roboto} from '@next/font/google';
+
+const roboto = Roboto({
+    subsets: ['latin', 'cyrillic'], // Добавьте 'cyrillic', чтобы поддерживать русский текст
+    weight: ['400', '700'], // Укажите нужные веса шрифта
+});
 
 
 export const metadata: Metadata = {
@@ -12,13 +17,15 @@ export const metadata: Metadata = {
     },
     description: SITE_DESCRIPTION,
 };
-export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
-    children: React.ReactNode;
-}>) {
-    return (<html lang="ru">
-        <body ><Providers>{children}</Providers>
+
+
+export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
+    return (
+        <html lang="ru">
+        <body className={roboto.className}>
+        <Providers>
+            {children}
+        </Providers>
         </body>
         </html>
     );

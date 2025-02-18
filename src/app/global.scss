@@ -2,10 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-background text-foreground;
-  font-family: var(--font-geist-sans), sans-serif;
-}
+
 
 @layer utilities {
   .text-balance {
@@ -69,14 +66,7 @@ body {
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
+
 
 button {
   @apply rounded-3xl pl-4 pr-4;

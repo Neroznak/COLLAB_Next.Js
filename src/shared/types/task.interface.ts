@@ -8,6 +8,7 @@ export interface TaskInterface {
     answer:string
     author:string
     name: string
+    initial_data: string
     TaskTheory: ITaskTheory[];
 }
 

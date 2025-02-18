@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "@/app/main/Main.module.scss";
+import styles from "@/app/Main.module.scss";
 import {Zain} from '@next/font/google';
 import Link from "next/link";
 import React, {useState} from "react";

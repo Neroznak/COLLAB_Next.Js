@@ -37,7 +37,7 @@
 
 
 .over_text {
-  @apply text-center;
+  @apply text-center font-bold;
   font-size: 1em; /* Начальный размер текста */
   white-space: nowrap;        /* Запрещает перенос текста на новую строку */
   overflow: hidden;           /* Обрезает текст, если он выходит за пределы блока */
@@ -50,7 +50,7 @@
 
 .task {
   @apply flex flex-col pl-5 pt-3;
-  font-family: "Roboto Th";
+  font-family: "Inter";
   max-width: 100%; /* Максимальная ширина блока равна ширине родителя */
   width: 100%;     /* Блок будет занимать всю доступную ширину родителя */
   overflow-x:hidden
@@ -59,7 +59,7 @@
 
 .theory {
   @apply pl-5 pt-3;
-  font-family: "Roboto Th";
+  font-family: "Inter";
   max-width: 100%; /* Максимальная ширина блока равна ширине родителя */
   width: 100%;     /* Блок будет занимать всю доступную ширину родителя */
   overflow-x:hidden
@@ -95,20 +95,24 @@
 }
 
 .message_field{
-  @apply flex flex-col w-full;
+  @apply flex flex-col w-full h-full;
+  overflow-y: auto
 }
 
 .message_block {
-  @apply flex text-xs font-medium ml-2;
-  display: inline-block; /* Блок занимает столько места, сколько нужно для текста */
-  max-width: 350px; /* Максимальная ширина блока сообщений */
+  @apply flex flex-col text-xs font-medium ml-2;
+  display: inline-block;
+  max-width: 405px;
+  width: auto;
   padding: 10px;
   border-radius: 10px;
   margin-top: 5px;
   border: 1px solid #CCCCCC;
-  background-color: #ffffff; /* Цвет для сообщений, отправленных другим пользователем */
-  word-wrap: break-word; /* Перенос слов, если они слишком длинные */
+  background-color: #ffffff;
+  word-wrap: break-word;
 }
+
+
 
 
 //.send_field {
@@ -174,5 +178,8 @@
 
 
 .chat_header{
-  @apply flex flex-row p-4 justify-between bg-white
+  @apply flex flex-row items-center justify-between text-center bg-white pl-2 pr-2;
+  border-bottom: 1px solid #CCCCCC;
+  height: 70px;
+;
 }

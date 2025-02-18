@@ -1,0 +1,72 @@
+"use client"
+
+import styles from "@/app/collab/[collabHash]/Collab.module.scss";
+import {Avatar, AvatarImage} from "@/components/ui/avatar";
+import * as React from "react";
+import {Zain} from "@next/font/google";
+import {CollabProps} from "@/shared/types/collab.interface";
+import {useUserColor} from "@/app/collab/[collabHash]/UserColorContext";
+import {useState} from "react";
+import {collabService} from "@/services/collab.service";
+import {ArrowRightOnRectangleIcon} from "@heroicons/react/24/outline";
+
+
+const zain = Zain({
+    subsets: ['latin'], // Добавьте 'cyrillic', чтобы поддерживать русский текст
+    weight: ['400', '700'], // Укажите нужные веса шрифта
+});
+
+export const Sidebar: React.FC<CollabProps> = ({collab, user}) => {
+
+    const {getUserColor} = useUserColor();
+    const [isOpen, setIsOpen] = useState(false);
+
+    // Функция срабатывает при попытке user'а выйти из collab'а
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault(); // Предотвращаем перезагрузку страницы
+        collabService.leaveFromCollab(collab.hash, user.id);
+        localStorage.removeItem("accessToken");
+        window.location.href = `/`; // Редирект
+    }
+
+    return (
+        <aside className={styles.sidebar}>
+            <div className={styles.logo_font}>
+                <p className={zain.className}>Collabster</p>
+            </div>
+            <div className={styles.avatar_container}>
+                {collab?.user.map((collabUser) => (
+                    <div className={styles.avatar_block}>
+                        <Avatar>
+                            <AvatarImage src={collabUser.User.profilePictureUrl}/>
+                        </Avatar>
+                        <p className={styles.over_text}
+                           style={{color: getUserColor(collabUser.User.id)}}>{collabUser.User.userName}</p>
+                    </div>
+                ))}
+            </div>
+            <div className={" flex justify-center mb-2"}>
+                <button onClick={() => setIsOpen(true)} className={"bg-transparent text-black justify-items-center"}>
+                    <ArrowRightOnRectangleIcon className="w-6 h-6 "/>
+                </button>
+            </div>
+            {isOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white p-6 rounded shadow-lg">
+                        <p className="mb-4">Черчилль учил не сдаваться — ни в большом, ни в малом.</p>
+                        <div className="flex justify-between gap-2 ml-10 mr-10">
+                            <button onClick={() => setIsOpen(false)} className="px-4 py-2 bg-green-500 rounded">
+                                Ты прав, у меня получится!
+                            </button>
+                            <button onClick={(e) => handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)}
+                                    className="px-4 py-2 bg-red-500 text-white rounded"
+                            >
+                                Не, без вариантов
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </aside>
+    )
+}

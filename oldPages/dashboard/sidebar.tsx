@@ -1,5 +1,5 @@
 "use client"
-import styles from "@/app/dashboard/Dashboard.module.scss";
+import styles from "./Dashboard.module.scss";
 import {FC} from 'react';
 import Link from "next/link";
 

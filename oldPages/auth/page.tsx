@@ -2,11 +2,11 @@
 
 import {useState} from "react";
 import {useAuthForm} from "@/hooks/useAuthForm";
-import styles from "@/app/auth/Auth.module.scss";
+import styles from "./Auth.module.scss";
 import {Card, CardContent, CardTitle} from "@/components/ui/Card";
 import {Form} from "@/components/ui/form-elements/Form";
 import Link from "next/link";
-import AuthFields from "@/app/auth/AuthFields";
+import AuthFields from "./AuthFields";
 import {Button} from "@/components/ui/Button";
 
 export default function AuthPage() {

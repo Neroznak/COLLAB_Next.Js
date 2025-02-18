@@ -1,7 +1,7 @@
-import {Sidebar} from "@/app/dashboard/sidebar";
+import {Sidebar} from "./sidebar";
 import {Card} from "@/components/ui/Card";
-import styles from "@/app/dashboard/Dashboard.module.scss";
-import {Header} from "@/app/dashboard/header";
+import styles from "./Dashboard.module.scss";
+import {Header} from "./header";
 
 export default function Dashboard() {
     return (

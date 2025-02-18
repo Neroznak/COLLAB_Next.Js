@@ -33,14 +33,14 @@ const nextConfig = {
             }
         ]
     },
-    async redirects() {
-        return [
-            {
-                source: '/',
-                destination: '/main',
-                permanent: true, // Если true, то редирект будет 301, если false — 302
-            },
-        ];
-    },
+    // async redirects() {
+    //     return [
+    //         {
+    //             source: '/',
+    //             destination: '/main',
+    //             permanent: true, // Если true, то редирект будет 301, если false — 302
+    //         },
+    //     ];
+    // },
 };
 export default nextConfig;

@@ -1,6 +1,6 @@
-import {Sidebar} from "@/app/dashboard/sidebar";
-import styles from "@/app/courses/Courses.module.scss";
-import {Header} from "@/app/dashboard/header";
+import {Sidebar} from "../dashboard/sidebar";
+import styles from "./Courses.module.scss";
+import {Header} from "../dashboard/header";
 
 export default function Courses() {
     return (

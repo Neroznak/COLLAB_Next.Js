@@ -1,4 +1,4 @@
-import styles from "@/app/collab/new/Collab-New.module.scss";
+import styles from "./Collab-New.module.scss";
 import {Zain} from '@next/font/google';
 import Link from "next/link";
 

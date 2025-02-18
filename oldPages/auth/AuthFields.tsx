@@ -8,7 +8,7 @@ import {
 import { Input } from '@/components/ui/form-elements/Input'
 
 import { IAuthForm } from '@/shared/types/auth.interface'
-import styles from "@/app/auth/Auth.module.scss";
+import styles from "./Auth.module.scss";
 import {Label} from "@/components/ui/form-elements/Label";
 
 interface AuthFieldsProps {
