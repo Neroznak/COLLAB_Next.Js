@@ -2,16 +2,13 @@ import {axiosClassic, axiosWithAuth} from '@/api/api.interceptors'
 
 import {API_URL} from '@/api/api.config'
 import {CollabInterface} from "@/shared/types/collab.interface";
-import {IUser} from "@/shared/types/user.interface";
 import {referalService} from "@/services/referal.service";
 import {userService} from "@/services/user.service";
-import {BiMessageError} from "react-icons/bi";
 
 class CollabService {
 
     // Нужно получить информацию о collab'е с сервера при входе
-    async getCollabByHash(collabHash: string): Promise<CollabInterface> {
-        const accessToken = localStorage.getItem('accessToken');
+    async getCollabByHash(collabHash: string, accessToken:string): Promise<CollabInterface> {
         const {data: collab} = await axiosWithAuth<CollabInterface>({
             url: API_URL.collab(`/${collabHash}`),
             method: 'GET',
@@ -56,7 +53,7 @@ class CollabService {
     // User желает покинуть collab
     async leaveFromCollab(collabHash: string, userId: number) {
         const accessToken = localStorage.getItem("accessToken");
-        const {data: isReferal} = await axiosWithAuth<void>({
+        await axiosWithAuth<void>({
             url: API_URL.collab(`/leave`),
             method: 'POST',
             data: {
@@ -69,20 +66,18 @@ class CollabService {
         })
     }
 
-
 }
 
 // Функция получает collab по collabHash из параметра
-export const fetchCollab = async (collabHash: string, setIsLoading: (isLoading: boolean) => void) => {
+export const getCollab = async (collabHash: string, setIsLoading: (isLoading: boolean) => void) => {
     const accessToken = localStorage.getItem("accessToken");
-    console.log("в нужной функции accesstoken такой: - ", accessToken)
     if (!accessToken) {
         console.error("Нет accessToken, невозможно загрузить collab");
         return;
     }
     try {
         setIsLoading(true);
-        return await collabService.getCollabByHash(collabHash);
+        return await collabService.getCollabByHash(collabHash, accessToken);
     } catch (error) {
         console.error("Ошибка при загрузке данных:", error);
     } finally {
@@ -91,7 +86,8 @@ export const fetchCollab = async (collabHash: string, setIsLoading: (isLoading: 
 };
 
 //Функция проверит что ref ссылка правильная, зарегает user'а и добавит в collab
-export const checkReferal = async (referal: string, collabHash: string) => {
+export const
+    CreateAndAddGuestToCollab = async (referal: string, collabHash: string) => {
     try {
         const isReferal = await referalService.isReferal(referal);
         if (isReferal && collabHash) {
@@ -105,29 +101,6 @@ export const checkReferal = async (referal: string, collabHash: string) => {
     }
 };
 
-//После того как пользователь введёт имя - оно изменится на сервере
-export const handleSaveNickname = async (nickName: string, authUser: IUser,
-                                         setAuthUser: (user: IUser) => void) => {
-    try {
-        if (nickName && authUser) {
-            const response = await fetch(API_URL.users(`/${authUser.id}`), {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({userName: nickName}),
-            });
 
-            if (response.ok) {
-                const data = await response.json();
-                setAuthUser(data);
-            } else {
-                console.error("Ошибка отправки формы");
-            }
-        }
-    } catch (error) {
-        console.error("Произошла ошибка:", error);
-    }
-};
 
 export const collabService = new CollabService()

@@ -35,13 +35,13 @@ export const Sidebar: React.FC<CollabProps> = ({collab, user}) => {
                 <p className={zain.className}>Collabster</p>
             </div>
             <div className={styles.avatar_container}>
-                {collab?.user.map((collabUser) => (
+                {collab?.user.map((user) => (
                     <div className={styles.avatar_block}>
                         <Avatar>
-                            <AvatarImage src={collabUser.User.profilePictureUrl}/>
+                            <AvatarImage src={user.User.profilePictureUrl}/>
                         </Avatar>
                         <p className={styles.over_text}
-                           style={{color: getUserColor(collabUser.User.id)}}>{collabUser.User.userName}</p>
+                           style={{color: getUserColor(user.User.id)}}>{user.User.userName}</p>
                     </div>
                 ))}
             </div>
