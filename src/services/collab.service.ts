@@ -1,24 +1,11 @@
 import {axiosClassic, axiosWithAuth} from '@/api/api.interceptors'
 
 import {API_URL} from '@/api/api.config'
-import {CollabInterface} from "@/shared/types/collab.interface";
-import {referalService} from "@/services/referal.service";
-import {userService} from "@/services/user.service";
+import {getCollabResponse} from "@/shared/types/collab.interface";
+import axios from "axios";
+
 
 class CollabService {
-
-    // Нужно получить информацию о collab'е с сервера при входе
-    async getCollabByHash(collabHash: string, accessToken:string): Promise<CollabInterface> {
-        const {data: collab} = await axiosWithAuth<CollabInterface>({
-            url: API_URL.collab(`/${collabHash}`),
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовок
-            },
-        })
-        return collab
-    }
-
     // Зачисляет нового пользователя в collab
     async joinToCollab(userName: string, getTaskDto: any) {
         const requestBody = {
@@ -33,21 +20,38 @@ class CollabService {
         return collab;
     }
 
-    // User зашёл по пригласительной ссылке, он зарегистрирован, нужно добавить его в collab
-    async addUserToCollab(userId: number, collabHash: string) {
-        const accessToken = localStorage.getItem("accessToken");
-        const {data: collab} = await axiosWithAuth<CollabInterface>({
-            url: API_URL.collab(`/add`),
-            method: 'POST',
-            data: {
-                userId: userId,
-                collabHash: collabHash,
-            },
-            headers: {
-                Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовок
-            },
-        })
-        return collab
+    // Нужно получить информацию о collab'е с сервера при входе
+
+    async getCollabForUsers(collabHash: string, userId: number | undefined, referal: string | null) {
+        try {
+            const {data} = await axiosClassic({
+                url: API_URL.collab("/get"),
+                method: 'POST',
+                data: {
+                    collabHash: collabHash,
+                    userId: userId,
+                    referal: referal
+                }
+            })
+            return data;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const status = error.response?.status;
+                if (status === 403) {
+                    // Обработка 403 Forbidden
+                   return 403;
+                } else if (status === 404) {
+                    // Обработка 404 Not Found
+                    return 404;
+                }  else if (status === 400) {
+                    return error.response?.statusText;
+                } else if (status === 401) {
+                    return error.response?.statusText;
+                }
+
+            }
+            throw error; // Пробрасываем ошибку, если она другая
+        }
     }
 
     // User желает покинуть collab
@@ -67,40 +71,5 @@ class CollabService {
     }
 
 }
-
-// Функция получает collab по collabHash из параметра
-export const getCollab = async (collabHash: string, setIsLoading: (isLoading: boolean) => void) => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-        console.error("Нет accessToken, невозможно загрузить collab");
-        return;
-    }
-    try {
-        setIsLoading(true);
-        return await collabService.getCollabByHash(collabHash, accessToken);
-    } catch (error) {
-        console.error("Ошибка при загрузке данных:", error);
-    } finally {
-        setIsLoading(false);
-    }
-};
-
-//Функция проверит что ref ссылка правильная, зарегает user'а и добавит в collab
-export const
-    CreateAndAddGuestToCollab = async (referal: string, collabHash: string) => {
-    try {
-        const isReferal = await referalService.isReferal(referal);
-        if (isReferal && collabHash) {
-            const {user, accessToken} = await userService.register();
-            localStorage.setItem('accessToken', accessToken);
-            await collabService.addUserToCollab(user.id, collabHash);
-            return user;
-        } else console.error("Ссылка не подтверждена")
-    } catch (err) {
-        console.error("Ошибка проверки реферальной ссылки", err);
-    }
-};
-
-
 
 export const collabService = new CollabService()

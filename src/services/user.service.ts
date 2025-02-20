@@ -10,7 +10,8 @@ class UserService {
 
     async getProfile() {
         const accessToken = localStorage.getItem('accessToken')
-        const {data: user} = await axiosWithAuth<IUser>({
+        if(!accessToken) return null;
+        const {data: user } = await axiosWithAuth<IUser>({
             url: API_URL.users('/profile'),
             method: 'GET',
             headers: {
@@ -31,7 +32,7 @@ class UserService {
     };
 
 
-    async updateUserName(userId: number, userName: string, setAuthUser: (user: IUser) => void) {
+    async updateUserName(userId: number, userName: string) {
         const accessToken = localStorage.getItem('accessToken');
         const {data} = await axiosWithAuth<{ user: IUser }>({
             url: API_URL.users(`/${userId}`),
@@ -43,7 +44,6 @@ class UserService {
                 Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовок
             },
         })
-        setAuthUser(data.user);
         return data.user
     }
 

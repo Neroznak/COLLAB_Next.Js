@@ -22,7 +22,12 @@ export interface ICollabUser {
 export interface CollabProps {
     collab: CollabInterface; // Пропс должен быть объектом типа CollabInterface
     user: IUser
+}
 
+export interface getCollabResponse {
+    collab: CollabInterface;
+    isUserNew: boolean;
+    user : IUser
 }
 
 
