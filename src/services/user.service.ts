@@ -1,17 +1,15 @@
-import {axiosClassic, axiosWithAuth} from '@/api/api.interceptors'
+import {axiosWithAuth} from '@/api/api.interceptors'
 
 import {API_URL} from '@/api/api.config'
 
 import {IUser} from '@/shared/types/user.interface'
 
-// Нужно прописать функцию для каждой функции в контроллере backend'а
 class UserService {
-
 
     async getProfile() {
         const accessToken = localStorage.getItem('accessToken')
-        if(!accessToken) return null;
-        const {data: user } = await axiosWithAuth<IUser>({
+        if (!accessToken) return null;
+        const {data: user} = await axiosWithAuth<IUser>({
             url: API_URL.users('/profile'),
             method: 'GET',
             headers: {
@@ -21,15 +19,6 @@ class UserService {
 
         return user
     }
-
-    async register() {
-        const {data} = await axiosClassic<{ user: IUser, accessToken: string }>({
-            url: API_URL.auth('/register'),
-            method: 'POST'
-        })
-
-        return data
-    };
 
 
     async updateUserName(userId: number, userName: string) {
@@ -48,4 +37,5 @@ class UserService {
     }
 
 }
+
 export const userService = new UserService();

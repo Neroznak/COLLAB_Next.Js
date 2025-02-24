@@ -13,44 +13,42 @@ import {Chat} from "@/app/collab/[collabHash]/chat";
 import {collabService} from "@/services/collab.service";
 import {userService} from "@/services/user.service";
 import {CollabInterface} from "@/shared/types/collab.interface";
+import Loading from "@/app/collab/[collabHash]/loading";
 
 export default function Collab() {
     const [nickName, setNickName] = useState("");
-
     const {oldUser, isLoading} = useProfile() as { oldUser: IUser | null, isLoading: boolean };
     const {collabHash} = useParams() as { collabHash: string };
     const referal = useSearchParams().get("referal");
-
-
-    const [isUserNewUse , setIsUserNew] = useState<boolean>(false);
+    const [isUserNewUse, setIsUserNew] = useState<boolean>(false);
     const [collab, setCollab] = useState<CollabInterface>();
     const [user, setUser] = useState<IUser>();
 
 
+
+    // Получение данных страницы
     useEffect(() => {
-        const fetchPageData = async () => {
+        const getPageData = async () => {
             try {
-                const { collab, user, isUserNew, accessToken } = await collabService.getCollabForUsers(collabHash, oldUser?.id, referal);
-                if(isUserNew) {
-                    localStorage.setItem("accessToken", accessToken);
-                }
+                const {
+                    collab,
+                    user,
+                    isUserNew,
+                    accessToken
+                } = await collabService.getCollabForUsers(collabHash, oldUser?.id, referal);
+                if (isUserNew) localStorage.setItem("accessToken", accessToken);
                 setIsUserNew(isUserNew);
                 setCollab(collab);
                 setUser(user);
             } catch (error) {
                 console.error("Error fetching collab data:", error);
+            } finally {
             }
         };
-        if(!isLoading)  fetchPageData();
+        if (!isLoading) getPageData();
     }, [isLoading]);
 
-
-
-
-    if (!collab || !user) {
-        // Здесь можно обработать ситуацию, когда данные ещё не загружены
-        return <div>Loading...</div>;
-    }
+    if (!collab || !user) return Loading();
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -58,24 +56,6 @@ export default function Collab() {
         setIsUserNew(false);
     }
 
-
-    // // Код срабатывает если в collab подключился неавторизированный user
-    // useEffect(() => {
-    //     if (userLoaded) return; // Проверка. Если user уже загружен - не нужно выполнять эту функцию
-    //     (async () => {
-    //         if (!user && referal) { // авторизированного user'а нет, но есть referal ссылка
-    //             setAuthUser(await CreateAndAddGuestToCollab(referal, collabHash));
-    //         }
-    //         setUserLoaded(true);
-    //     })();
-    // }, []);
-    //
-    // useEffect(() => {
-    //     if (!userLoaded) return; // Не загружать collab пока не получен user
-    //     (async () => {
-    //         collab.current = await getCollab(collabHash, setIsLoading);
-    //     })();
-    // }, [userLoaded]);
 
     return (
         <UserColorProvider>

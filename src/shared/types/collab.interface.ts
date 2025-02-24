@@ -1,4 +1,4 @@
-import {IUser} from "@/shared/types/user.interface";
+import {CollabUserInterface, IUser} from "@/shared/types/user.interface";
 
 export interface CollabInterface {
     id: number
@@ -20,8 +20,14 @@ export interface ICollabUser {
 
 
 export interface CollabProps {
-    collab: CollabInterface; // Пропс должен быть объектом типа CollabInterface
+    collab: CollabInterface;
     user: IUser
+}
+
+export interface CollabPropsSidebar {
+    collab: CollabInterface;
+    user: IUser;
+    users: CollabUserInterface[]
 }
 
 export interface getCollabResponse {

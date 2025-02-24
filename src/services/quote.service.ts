@@ -19,7 +19,6 @@ class QuoteService {
             url: API_URL.quote(),
             method: 'GET'
         })
-        console.log(quote);
         return quote
     }
 

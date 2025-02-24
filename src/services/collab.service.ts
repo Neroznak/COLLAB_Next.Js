@@ -1,7 +1,6 @@
 import {axiosClassic, axiosWithAuth} from '@/api/api.interceptors'
 
 import {API_URL} from '@/api/api.config'
-import {getCollabResponse} from "@/shared/types/collab.interface";
 import axios from "axios";
 
 
@@ -21,7 +20,6 @@ class CollabService {
     }
 
     // Нужно получить информацию о collab'е с сервера при входе
-
     async getCollabForUsers(collabHash: string, userId: number | undefined, referal: string | null) {
         try {
             const {data} = await axiosClassic({

@@ -22,46 +22,6 @@ export const Chat: React.FC<CollabProps> = ({collab, user}) => {
 
     const {getUserColor} = useUserColor();
 
-    // Подключение к сокету и прослушка сообщений
-    useEffect(() => {
-        if (!socketRef.current) {
-            socketRef.current = io('ws://localhost:5006/messages');
-
-            // Обработка получения нового сообщения
-            socketRef.current.on('sendMessage', (sendMessage: IMessage) => {
-                setMessages((prevMessages) => [...prevMessages, sendMessage]);
-            });
-        }
-
-        return () => {
-            if (socketRef.current) {
-                socketRef.current.disconnect();
-                socketRef.current = null;
-            }
-        };
-    }, []);
-
-    // Отмотка сообщения вниз
-    useEffect(() => {
-        if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({behavior: 'auto'});
-        }
-    }, [messages]);
-
-    // Отправка сообщения через socket.io
-    const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (socketRef.current && content.trim()) {
-            const messageData = {
-                content,
-                userId: user.id,
-                collabHash: collab.hash
-            };
-            socketRef.current.emit('newMessage', messageData);
-            setContent('');
-        }
-    };
-
     // Загрузка сообщений collab'а
     useEffect(() => {
         const fetchMessages = async () => {
@@ -75,14 +35,51 @@ export const Chat: React.FC<CollabProps> = ({collab, user}) => {
         fetchMessages();
     }, []);
 
+    // Подключение к сокету и прослушка сообщений. Из-за этого кода все сразу видят новые сообщения
+    useEffect(() => {
+        if (!socketRef.current) {
+            socketRef.current = io('ws://localhost:5006/messages');
+            // Обработка получения нового сообщения
+            socketRef.current.on('sendMessage', (sendMessage: IMessage) => {
+                setMessages((prevMessages) => [...prevMessages, sendMessage]);
+            });
+        }
+        return () => {
+            if (socketRef.current) {
+                socketRef.current.disconnect();
+                socketRef.current = null;
+            }
+        };
+    }, []);
+
+    // Отправка сообщения через socket.io. Это чтобы отправлять свои новые сообщения в socket
+    const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (socketRef.current && content.trim()) {
+            const messageData = {
+                content,
+                userId: user.id,
+                collabHash: collab.hash
+            };
+            socketRef.current.emit('newMessage', messageData);
+            setContent('');
+        }
+    };
+
+    // Функция срабатывает при нажатии кнопки "Пригласить"
     const handleInvite = async () => {
-        console.log("Доходим до открытия")
         setIsOpen(true)
         const referal = await referalService.create(collab.hash, user.id);
         const generatedReferal = referal.referal;
         setReferalLink(`http://localhost:3001/collab/${collab.hash}?referal=${generatedReferal}`);
     }
 
+    // Отмотка сообщения вниз
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({behavior: 'auto'});
+        }
+    }, [messages]);
 
     const copyToClipboard = async () => {
         try {
@@ -132,7 +129,7 @@ export const Chat: React.FC<CollabProps> = ({collab, user}) => {
                     </div>
                 ) : (messages.map(message => (
 
-                    <div className={styles.message_block}>
+                    <div className={styles.message_block} key={message.id}>
                         <p className={"font-bold"}
                            style={{color: getUserColor(message.userId)}}>{message.user.userName}</p>
                         <p>{message.content}</p>

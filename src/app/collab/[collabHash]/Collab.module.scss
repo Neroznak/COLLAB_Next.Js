@@ -50,7 +50,7 @@
 
 .task {
   @apply flex flex-col pl-5 pt-3;
-  font-family: "Inter";
+  //font-family: "Inter";
   max-width: 100%; /* Максимальная ширина блока равна ширине родителя */
   width: 100%;     /* Блок будет занимать всю доступную ширину родителя */
   overflow-x:hidden
@@ -59,7 +59,7 @@
 
 .theory {
   @apply pl-5 pt-3;
-  font-family: "Inter";
+  //font-family: "Inter";
   max-width: 100%; /* Максимальная ширина блока равна ширине родителя */
   width: 100%;     /* Блок будет занимать всю доступную ширину родителя */
   overflow-x:hidden
