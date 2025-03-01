@@ -22,7 +22,6 @@ export const Sidebar: React.FC<CollabProps> = ({collab, user}) => {
     const {getUserColor} = useUserColor();
     const [isOpen, setIsOpen] = useState(false);
     const [users, setUsers] = useState<IUser[]>([]);
-    const socket = io('ws://localhost:5006/collab');         // Подключаемся к socket'у только один раз
 
 
     // EMIT - отправка события
@@ -48,9 +47,6 @@ export const Sidebar: React.FC<CollabProps> = ({collab, user}) => {
     }     // Функция срабатывает при попытке user'а выйти из collab'а
 
 
-    console.log("users: ", JSON.stringify(users));
-
-
     return (
         <aside className={styles.sidebar}>
             <div className={styles.logo_font}>
@@ -63,7 +59,7 @@ export const Sidebar: React.FC<CollabProps> = ({collab, user}) => {
                             <Avatar>
                                 <AvatarImage src={user.profilePictureUrl}/>
                             </Avatar>
-                            <p className={styles.over_text} style={{color: getUserColor(user.id)}}>
+                            <p className={styles.over_text}>
                                 {user.userName}
                             </p>
                         </div>

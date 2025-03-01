@@ -95,7 +95,9 @@ export const Chat: React.FC<CollabProps> = ({collab, user}) => {
         <div className={styles.chat}>
             <div className={styles.chat_header}>
                 <p className={"text-2xl font-bold"}>Collab</p>
-                <button onClick={() => handleInvite()} className={"mt-2 w-24 h-8"}>Пригласить</button>
+                {(collab.isPassed) ? (<div></div>) : (
+                    <button onClick={() => handleInvite()} className={"mt-2 w-24 h-8"}>Пригласить</button>
+                    )}
             </div>
 
 

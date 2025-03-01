@@ -101,8 +101,8 @@ export const Content: React.FC<CollabProps> = ({collab, user}) => {
                         </BreadcrumbList>
                     </Breadcrumb>
                 </div>
-                <button className={"h-8 font-light mr-2 mt-2"}
-                        onClick={toggleTheory}>{isTheory ? 'К заданию' : 'К теории'}</button>
+                <button className={"h-8 font-light mr-8 mt-2"}
+                        onClick={toggleTheory}>{isTheory ? 'Задание' : 'Теория'}</button>
             </div>
             <div className={"flex flex-col pl-4"}>
                 <div className={"flex flex-wrap text-2xl font-bold"}>{task?.name}

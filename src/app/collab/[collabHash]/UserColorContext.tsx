@@ -1,7 +1,6 @@
 import { createContext, useContext } from "react";
 
-const colors = ["#EC4899", "#1ABC9C", "#3357FF", "#F39C12", "#9B59B6"];
-
+const colors = ["#000000", "#FFD700", "#32CD32", "#FF6600", "#FF3366"];
 // Тип контекста
 interface UserColorContextType {
     getUserColor: (userId: number) => string;

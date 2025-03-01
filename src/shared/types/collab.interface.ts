@@ -24,16 +24,5 @@ export interface CollabProps {
     user: IUser
 }
 
-export interface CollabPropsSidebar {
-    collab: CollabInterface;
-    user: IUser;
-    users: CollabUserInterface[]
-}
-
-export interface getCollabResponse {
-    collab: CollabInterface;
-    isUserNew: boolean;
-    user : IUser
-}
 
 

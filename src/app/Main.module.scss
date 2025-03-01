@@ -1,32 +1,61 @@
 .wrapper {
   @apply flex items-center justify-center h-screen;
-  background-color: #F8F6FF;
+  background-color: #FFFFFF;
 }
 
 
 .container {
-  @apply flex flex-col items-center h-screen;
-  width: 860px;
+  @apply flex flex-col h-screen;
+  width: 50%;
 }
+
 
 .header {
-@apply  mt-16 justify-items-center ;
-  color:#7552E9;
-  font-size: 80px;
+@apply flex flex-row gap-4 ml-3;
+
 }
 
 
+.logo {
+  @apply ml-3;
+  color:#3382E5;
+  font-size: 50px;
+  font-family: "Zain Black";
+}
+
+
+.content {
+  @apply flex h-96 flex-col ml-24 mt-32;
+  width: 80%;
+}
+
+
+.big_text_black {
+  font-size: 42px;
+  font-family: "Artifakt Element Black";
+}
+
+.big_text_blue {
+  font-size: 42px;
+  font-family: "Artifakt Element Black";
+  color:#3382E5;
+}
+
 .input{
-  @apply flex bg-white justify-center items-center pl-3;
+  @apply flex bg-white pl-3;
   border: 1px solid #cccccc;
   height: 38px;
   border-radius: 10px;
-  width: 600px;
+  width: 60%;
   color:black;
   font-weight: normal;
   font-size: 16px;
 }
 
+
+.services {
+  @apply flex mt-auto mb-4 gap-4 justify-center;
+}
 
 .categories {
   @apply flex gap-4 mt-8;
@@ -70,7 +99,7 @@
   height: 60px;
 
   &:hover {
-    background-color: #7552E9; /* Изменение цвета фона */
+    background-color: #3382E5; /* Изменение цвета фона */
     color: white; /* Изменение цвета текста */
 
     /* Для всех вложенных элементов, если нужно: */

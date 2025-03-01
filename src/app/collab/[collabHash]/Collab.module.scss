@@ -1,13 +1,14 @@
 .wrapper {
   @apply flex h-screen;
+  background-color: #3382E5;
+
   //min-height: 100vh; /* Минимальная высота экрана */
 }
 
 .sidebar {
-  @apply flex flex-col h-full border-r;
-  border-color:#CCCCCC;
-  background-color: #F8F6FF;
-  width: 136px;
+  @apply flex flex-col h-full;
+  background-color: #3382E5;
+  width: 74px;
 }
 
 //bg-gray-300 rounded-3xl justify-center items-center text-xs;
@@ -24,14 +25,18 @@
 
 
 .logo_font {
-  @apply text-white font-bold flex justify-center mt-3;
+  @apply text-white font-bold flex justify-center mt-3 ml-5;
   font-size: 20px;
-  color:#7552E9;
+  color:#ffffff;
 }
 
 .content {
-  @apply flex h-full w-full flex-col border-r;
+  @apply flex flex-col bg-white mt-4 mr-4 ml-4;
   overflow-y: auto; /* Появление ползунка, если контент больше 400px */
+  height: calc(100vh - 32px);
+  width: 70%;
+  border-radius: 20px;
+
 }
 
 
@@ -44,6 +49,7 @@
   text-overflow: ellipsis;    /* Добавляет '...' в конце текста, если он обрезается */
   width: 80px;               /* Установи ширину блока по твоим нуждам */
   display: inline-block;      /* Если это блок с текстом */
+  color: #FFFFFF;
 }
 
 
@@ -87,11 +93,12 @@
 
 
 .chat {
-  @apply flex h-full  flex-col w-full border-l;
+  @apply flex h-full  flex-col w-full mt-4 mr-4;
   max-width:425px;
   overflow-x: hidden;
-  border-color:#CCCCCC;
-  background-color: #F8F6FF;
+  background-color: #ffffff;
+  height: calc(100vh - 32px);
+  border-radius: 20px;
 }
 
 .message_field{
