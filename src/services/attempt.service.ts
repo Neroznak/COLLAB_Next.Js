@@ -1,8 +1,6 @@
 import {axiosClassic, axiosWithAuth} from '@/api/api.interceptors'
 
 import {API_URL} from '@/api/api.config'
-import {CollabInterface} from "@/shared/types/collab.interface";
-import {IUser} from "@/shared/types/user.interface";
 import {AttemptInterface} from "@/shared/types/attempt.interface";
 
 class AttemptService {

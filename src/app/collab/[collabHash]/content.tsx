@@ -16,26 +16,31 @@ import {javascript} from "@codemirror/lang-javascript";
 import {TaskInterface} from "@/shared/types/task.interface";
 import {taskService} from "@/services/task.service";
 import {AttemptInterface} from "@/shared/types/attempt.interface";
-import {Socket} from "socket.io-client";
 import {attemptService} from "@/services/attempt.service";
+import ErrorComponent from "@/components/ErrorComponent";
+import {handleRequestError} from "@/services/collab.service";
 
 export const Content: React.FC<CollabProps> = ({collab, user}) => {
 
     const [task, setTask] = useState<TaskInterface | null>(null);
     const [userAnswer, setUserAnswer] = useState<string>(task?.initial_data || "");
     const [attempt, setAttempt] = useState<AttemptInterface>();
+    const [errorCode, setErrorCode] = useState<number | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 
     // Получаем Task
     useEffect(() => {
         const fetchTask = async () => {
             try {
-                if (collab?.taskId) { // Убедимся, что collab и taskId не равны null или undefined
+                if (collab?.taskId) {
                     const fetchedTask = await taskService.getTask(+collab.taskId);
                     setTask(fetchedTask);
                 }
             } catch (error) {
-                console.error("Ошибка при загрузке задачи:", error);
+                const {errorCode, errorMessage400} = handleRequestError(error)
+                setErrorCode(errorCode);
+                setErrorMessage(errorMessage400);
             }
         };
         fetchTask();
@@ -49,7 +54,7 @@ export const Content: React.FC<CollabProps> = ({collab, user}) => {
             const response = await attemptService.execute(userAnswer, collab.hash, user.id)
             setAttempt(response);
         } catch (error) {
-            console.error("Произошла ошибка:", error);
+            handleRequestError(error)
         }
     };
 
@@ -59,6 +64,11 @@ export const Content: React.FC<CollabProps> = ({collab, user}) => {
             setUserAnswer(task.initial_data);
         }
     }, [task]);
+
+
+    if (errorCode && errorMessage) {
+        return <ErrorComponent code={errorCode} message400={errorMessage} />;
+    }
 
 
     return (

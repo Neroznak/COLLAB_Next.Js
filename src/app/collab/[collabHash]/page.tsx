@@ -10,10 +10,11 @@ import {UserColorProvider} from "@/app/collab/[collabHash]/UserColorContext";
 import {Sidebar} from "@/app/collab/[collabHash]/sidebar";
 import {Content} from "@/app/collab/[collabHash]/content";
 import {Chat} from "@/app/collab/[collabHash]/chat";
-import {collabService} from "@/services/collab.service";
+import {collabService, handleRequestError} from "@/services/collab.service";
 import {userService} from "@/services/user.service";
 import {CollabInterface} from "@/shared/types/collab.interface";
 import Loading from "@/app/collab/[collabHash]/loading";
+import ErrorComponent from "@/components/ErrorComponent";
 
 export default function Collab() {
     const [nickName, setNickName] = useState("");
@@ -21,8 +22,11 @@ export default function Collab() {
     const [collab, setCollab] = useState<CollabInterface>();
     const params = useParams();
     const collabHash = Array.isArray(params?.collabHash) ? params.collabHash[0] : params?.collabHash || "";
-    const [isUserNew, setIsUserNew] = useState<string | null>(null);
+    const [isUserNew, setIsUserNew] = useState(false);
     const [isClient, setIsClient] = useState(false);  // Флаг для проверки клиента
+    const [errorCode, setErrorCode] = useState<number | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
 
     // Проверяем, что мы на клиенте
     useEffect(() => {
@@ -32,7 +36,7 @@ export default function Collab() {
     // Загружаем данные из localStorage только на клиенте
     useEffect(() => {
         if (isClient) {
-            setIsUserNew(localStorage.getItem('isUserNew'));
+            setIsUserNew(localStorage.getItem('isUserNew') === "true");
         }
     }, [isClient]);
 
@@ -43,7 +47,9 @@ export default function Collab() {
                 const collab = await collabService.getCollab(collabHash);
                 setCollab(collab);
             } catch (error) {
-                console.error("Error fetching collab data:", error);
+                const {errorCode, errorMessage400} = handleRequestError(error)
+                setErrorCode(errorCode);
+                setErrorMessage(errorMessage400);
             }
         };
         if (!isLoading) getCollabData();
@@ -53,13 +59,24 @@ export default function Collab() {
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         if (user) {
             e.preventDefault();
-            await userService.updateUserName(user.id, nickName);
-            localStorage.setItem('isUserNew', "false");
+            try {
+                await userService.updateUserName(user.id, nickName);
+                localStorage.setItem('isUserNew', "false");
+                setIsUserNew(false);
+            } catch (error) {
+                const {errorCode, errorMessage400} = handleRequestError(error)
+                setErrorCode(errorCode);
+                setErrorMessage(errorMessage400);
+            }
         }
     }
 
     if (!isClient) {
         return null; // Пока не клиент, не рендерим компонент
+    }
+
+    if (errorCode && errorMessage) {
+        return <ErrorComponent code={errorCode} message400={errorMessage} />;
     }
 
     return (
@@ -75,7 +92,7 @@ export default function Collab() {
                 ) : (
                     <Loading/>
                 )}
-                {isUserNew == "true" &&
+                {isUserNew &&
                     (<div
                         className="fixed inset-0 flex items-center justify-center bg-white border-b bg-opacity-50 z-50">
                         <div className="flex flex-col items-center justify-center">

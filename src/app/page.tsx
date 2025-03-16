@@ -2,52 +2,72 @@
 
 import styles from "@/app/Main.module.scss";
 import React, {useEffect, useState} from "react";
-import {collabService} from "@/services/collab.service";
+import {collabService, handleRequestError} from "@/services/collab.service";
 import abstr from "../../public/assets/images/collabster2.png"
 import Image from 'next/image';
 import {FaTelegram, FaPatreon} from "react-icons/fa";
+import ErrorComponent from "@/components/ErrorComponent";
 
 
 export default function Home() {
     const [userName, setUserName] = useState("");
     const [referal, setReferal] = useState<string | null>(null);
+    const [errorCode, setErrorCode] = useState<number | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [error, setError] = useState<string>('');
 
+    // Проверка есть ли referal, если есть -> установили ref
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const ref = params.get("referal");
-        console.log("Referral from URL:", ref);
         setReferal(ref);
     }, []);
 
-
+    // Если есть ref -> делаем запрос на сервер
     useEffect(() => {
         const isReferalExist = async () => {
             if (referal) {
-                const response = await collabService.invite(referal);
-                const accessToken = response.accessToken;
-                console.log(response.collab.hash)
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('isNewUser', "true");
-                window.location.href = `/collab/${response.collab.hash}`;
+                try {
+                    const response = await collabService.invite(referal);
+                    const accessToken = response.accessToken;
+                    localStorage.setItem('accessToken', accessToken);
+                    localStorage.setItem('isUserNew', "true");
+                    window.location.href = `/collab/${response.collab.hash}`;
+                } catch (error) {
+                    const {errorCode, errorMessage400} = handleRequestError(error)
+                    setErrorCode(errorCode);
+                    setErrorMessage(errorMessage400);
+                }
             }
         };
+        isReferalExist();
+    }, [referal]);
 
-        isReferalExist(); // Вызов функции
-
-    }, [referal]); // Зависимость от referal
 
 
 // Функция кнопки "Начать занятие
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // Предотвращаем перезагрузку страницы
-        const category = "TYPESCRIPT";
-        const difficulty = "JUNIOR";
-        const title = "Простые функции"
-        const getTaskDto = {difficulty, category, title}
-        const response = await collabService.joinToCollab(userName, getTaskDto);
-        const accessToken = response.accessToken;
-        localStorage.setItem('accessToken', accessToken);
-        window.location.href = `/collab/${response.collab.hash}`; // Редирект
+        if (!userName.trim()) {
+            setError('Введите ник');
+            return;
+        }
+        try {
+            const response = await collabService.joinToCollab(userName);
+            const accessToken = response.accessToken;
+            localStorage.setItem('accessToken', accessToken);
+            window.location.href = `/collab/${response.collabHash}`; // Редирект
+        } catch (error) {
+            const {errorCode, errorMessage400} = handleRequestError(error)
+            setErrorCode(errorCode);
+            setErrorMessage(errorMessage400);
+        }
+    }
+
+
+
+    if (errorCode && errorMessage) {
+        return <ErrorComponent code={errorCode} message400={errorMessage}/>;
     }
 
 
@@ -73,6 +93,10 @@ export default function Home() {
                                     className={"mt-4 text-sm pt-2 w-44 pb-2 pl-8 pr-8 rounded-xl"}>Начать
                                 занятие
                             </button>
+                            {/* Сообщение об ошибке */}
+                            {error && (
+                                <p className="text-red-500 mt-2">{error}</p>
+                            )}
                         </div>
                     </form>
                 </div>

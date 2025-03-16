@@ -6,98 +6,40 @@ import {CollabInterface} from "@/shared/types/collab.interface";
 
 
 class CollabService {
-    // Зачисляет нового пользователя в collab
-    async joinToCollab(userName: string, getTaskDto: any) {
-        const requestBody = {
-            createUserDto: {userName},
-            getTaskDto: getTaskDto,
+
+
+    async joinToCollab(userName: string) {
+        const createUserDto = {
+            userName: userName,
         };
         const {data: collab} = await axiosClassic({
             url: API_URL.collab(`/join`),
             method: "POST",
-            data: JSON.stringify(requestBody),
+            data: createUserDto,
         });
         return collab;
     }
 
-
-    // async getCollabForUsers(collabHash: string, userId: number | undefined, referal: string | null) {
-    //     try {
-    //         const {data} = await axiosClassic({
-    //             url: API_URL.collab("/get"),
-    //             method: 'POST',
-    //             data: {
-    //                 collabHash: collabHash,
-    //                 userId: userId,
-    //                 referal: referal
-    //             }
-    //         })
-    //         return data;
-    //     } catch (error) {
-    //         if (axios.isAxiosError(error)) {
-    //             const status = error.response?.status;
-    //             if (status === 403) {
-    //                 // Обработка 403 Forbidden
-    //                return 403;
-    //             } else if (status === 404) {
-    //                 // Обработка 404 Not Found
-    //                 return 404;
-    //             }  else if (status === 400) {
-    //                 return error.response?.statusText;
-    //             } else if (status === 401) {
-    //                 return error.response?.statusText;
-    //             }
-    //
-    //         }
-    //         throw error; // Пробрасываем ошибку, если она другая
-    //     }
-    // }
-
-
     async invite(referal: string) {
-        try {
-            const {data} = await axiosClassic({
-                url: API_URL.collab("/invite"),
-                method: 'POST',
-                data: {
-                    referal: referal
-                }
-            })
-            return data;
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                const status = error.response?.status;
-                if (status === 403) {
-                    // Обработка 403 Forbidden
-                    return 403;
-                } else if (status === 404) {
-                    // Обработка 404 Not Found
-                    return 404;
-                } else if (status === 400) {
-                    return error.response?.statusText;
-                } else if (status === 401) {
-                    return error.response?.statusText;
-                }
+        const {data} = await axiosClassic({
+            url: API_URL.collab("/invite"),
+            method: 'POST',
+            data: {
+                referal: referal
             }
-            throw error; // Пробрасываем ошибку, если она другая
-        }
+        })
+        return data;
     }
 
     async getCollab(collabHash: string): Promise<CollabInterface> {
         const accessToken = localStorage.getItem("accessToken");
-        try {
-            const response = await axiosWithAuth<CollabInterface>({
-                url: API_URL.collab(`/${collabHash}`),
-                method: "GET",
-                headers: { Authorization: `Bearer ${accessToken}` },
-            });
-            return response.data;
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                throw error.response?.status || new Error("Unknown error"); // Пробрасываем статус ошибки
-            }
-            throw new Error("Unexpected error");
-        }
+        const response = await axiosWithAuth<CollabInterface>({
+            url: API_URL.collab(`/${collabHash}`),
+            method: "GET",
+            headers: {Authorization: `Bearer ${accessToken}`},
+        });
+        return response.data;
+
     }
 
 
@@ -105,7 +47,7 @@ class CollabService {
     async leaveFromCollab(collabHash: string, userId: number) {
         const accessToken = localStorage.getItem("accessToken");
         await axiosWithAuth<void>({
-            url: API_URL.collab(`/leave`),
+            url: API_URL.collab(`/${collabHash}/leave`),
             method: 'DELETE',
             data: {
                 collabHash: collabHash,
@@ -117,6 +59,32 @@ class CollabService {
         })
     }
 
+
+
+
 }
 
 export const collabService = new CollabService()
+
+export function handleRequestError(error: unknown) {
+    let errorCode;
+    let errorMessage400;
+    if (axios.isAxiosError(error)) {
+        if (error.response) {
+         errorCode =     error.response.status;
+            errorMessage400 =    error.response.data.message;
+        } else {
+            errorCode =  500;
+            errorMessage400 = "";
+
+        }
+    } else if (error instanceof Error) {
+        errorCode =  Number(error.message);
+        errorMessage400 = "";
+
+    } else {
+        errorCode =  500;
+        errorMessage400 = "";
+    }
+    return {errorCode, errorMessage400};
+}

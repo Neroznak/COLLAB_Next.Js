@@ -3,19 +3,22 @@
 import styles from "@/app/collab/[collabHash]/Collab.module.scss";
 import {Avatar, AvatarImage} from "@/components/ui/avatar";
 import * as React from "react";
-// import {Zain} from "@next/font/google";
 import {CollabProps} from "@/shared/types/collab.interface";
 import {useEffect, useState} from "react";
-import {collabService} from "@/services/collab.service";
+import {collabService, handleRequestError} from "@/services/collab.service";
 import {ArrowRightOnRectangleIcon} from "@heroicons/react/24/outline";
 import {IUser} from "@/shared/types/user.interface";
 import {io} from "socket.io-client";
+import ErrorComponent from "@/components/ErrorComponent";
 
 
 
 export const Sidebar: React.FC<CollabProps> = ({collab, user}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [users, setUsers] = useState<IUser[]>([]);
+    const [errorCode, setErrorCode] = useState<number | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
 
 
     // EMIT - отправка события
@@ -34,10 +37,20 @@ export const Sidebar: React.FC<CollabProps> = ({collab, user}) => {
     }, [collab.hash]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault(); // Предотвращаем перезагрузку страницы
-        await collabService.leaveFromCollab(collab.hash, user.id);
-        localStorage.removeItem("accessToken");
-        window.location.href = `/`; // Редирект
+        e.preventDefault();
+        try {
+            await collabService.leaveFromCollab(collab.hash, user.id);
+            localStorage.removeItem("accessToken");
+            window.location.href = `/`; // Редирект
+        } catch (error) {
+            const {errorCode, errorMessage400} = handleRequestError(error)
+            setErrorCode(errorCode);
+            setErrorMessage(errorMessage400);
+        }
+    }
+
+    if (errorCode && errorMessage) {
+        return <ErrorComponent code={errorCode} message400={errorMessage} />;
     }
 
 

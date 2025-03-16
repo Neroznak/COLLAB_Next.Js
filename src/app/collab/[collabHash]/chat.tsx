@@ -9,72 +9,89 @@ import {io, Socket} from "socket.io-client";
 import {messageService} from "@/services/message.service";
 import {useUserColor} from "@/app/collab/[collabHash]/UserColorContext";
 import {referalService} from "@/services/referal.service";
-import {API_URL} from "@/api/api.config";
+import ErrorComponent from "@/components/ErrorComponent";
+import {handleRequestError} from "@/services/collab.service";
 
 export const Chat: React.FC<CollabProps> = ({collab, user}) => {
-    const socketRef = useRef<Socket | null>(null);
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const [content, setContent] = useState('');
     const [messages, setMessages] = useState<IMessage[]>([]);
     const [isOpen, setIsOpen] = useState(false);
     const [copied, setCopied] = useState(false);
-    const [referalLink, setReferalLink]  = useState("")
+    const [referalLink, setReferalLink] = useState("")
+    const [errorCode, setErrorCode] = useState<number | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const socketRef = useRef<Socket | null>(null);
 
     const {getUserColor} = useUserColor();
 
     // Загрузка сообщений collab'а
     useEffect(() => {
-        const fetchMessages = async () => {
+        const getMessages = async () => {
             try {
                 const fetchedMessages = await messageService.getMessagesByCollab(collab.hash);
                 setMessages(fetchedMessages);
             } catch (error) {
-                console.error("Ошибка загрузки сообщений:", error);
+                const {errorCode, errorMessage400} = handleRequestError(error)
+                setErrorCode(errorCode);
+                setErrorMessage(errorMessage400);
             }
         };
-        fetchMessages();
+        getMessages();
     }, []);
 
     // Подключение к сокету и прослушка сообщений. Из-за этого кода все сразу видят новые сообщения
     useEffect(() => {
         if (!socketRef.current) {
             socketRef.current = io('ws://localhost:5006/messages');
-            // Обработка получения нового сообщения
-            socketRef.current.on('sendMessage', (sendMessage: IMessage) => {
-                setMessages((prevMessages) => [...prevMessages, sendMessage]);
+            socketRef.current.on('connect', () => {
+                socketRef.current?.emit('joinCollab', collab.hash);
+            });
+            socketRef.current.on('receiveMessage', (receiveMessage: IMessage) => {
+                setMessages((prevMessages) => [...prevMessages, receiveMessage]);
             });
         }
-        return () => {
-            if (socketRef.current) {
-                socketRef.current.disconnect();
-                socketRef.current = null;
-            }
-        };
-    }, []);
 
-    // Отправка сообщения через socket.io. Это чтобы отправлять свои новые сообщения в socket
+        return () => {
+            socketRef.current?.emit('leaveRoom', collab.hash);
+            socketRef.current?.disconnect();
+            socketRef.current = null;
+        };
+    }, [collab.hash]);
+
+
+// Отправка сообщения через socket.io. Это чтобы отправлять свои новые сообщения в socket
     const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (socketRef.current && content.trim()) {
+        if (!socketRef.current?.connected) {
+            return;
+        }
+        if (content.trim()) {
             const messageData = {
                 content,
                 userId: user.id,
                 collabHash: collab.hash
             };
-            socketRef.current.emit('newMessage', messageData);
+            socketRef.current.emit('sendMessage', messageData);
             setContent('');
         }
     };
 
-    // Функция срабатывает при нажатии кнопки "Пригласить"
+// Функция срабатывает при нажатии кнопки "Пригласить"
     const handleInvite = async () => {
         setIsOpen(true)
-        const referal = await referalService.create(collab.hash, user.id);
-        const generatedReferal = referal.referal;
-        setReferalLink(`http://localhost:3001?referal=${generatedReferal}`);
+        try {
+            const referal = await referalService.create(collab.hash, user.id);
+            const generatedReferal = referal.referal;
+            setReferalLink(`http://localhost:3001?referal=${generatedReferal}`);
+        } catch (error) {
+            const {errorCode, errorMessage400} = handleRequestError(error)
+            setErrorCode(errorCode);
+            setErrorMessage(errorMessage400);
+        }
     }
 
-    // Отмотка сообщения вниз
+// Отмотка сообщения вниз
     useEffect(() => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({behavior: 'auto'});
@@ -91,13 +108,17 @@ export const Chat: React.FC<CollabProps> = ({collab, user}) => {
         }
     };
 
+    if (errorCode && errorMessage) {
+        return <ErrorComponent code={errorCode} message400={errorMessage}/>;
+    }
+
     return (
         <div className={styles.chat}>
             <div className={styles.chat_header}>
                 <p className={"text-2xl font-bold"}>Collab</p>
                 {(collab.isPassed) ? (<div></div>) : (
                     <button onClick={() => handleInvite()} className={"mt-2 w-24 h-8"}>Пригласить</button>
-                    )}
+                )}
             </div>
 
 
