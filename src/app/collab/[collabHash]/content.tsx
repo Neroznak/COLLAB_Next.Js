@@ -2,7 +2,7 @@
 
 import styles from "@/app/collab/[collabHash]/Collab.module.scss";
 import * as React from "react";
-import {useEffect, useRef, useState} from "react";
+import {useEffect,  useState} from "react";
 import {CollabProps} from "@/shared/types/collab.interface";
 import {
     Breadcrumb,
@@ -22,7 +22,6 @@ import {attemptService} from "@/services/attempt.service";
 export const Content: React.FC<CollabProps> = ({collab, user}) => {
 
     const [task, setTask] = useState<TaskInterface | null>(null);
-    const [isTheory, setIsTheory] = useState<Boolean>(false);
     const [userAnswer, setUserAnswer] = useState<string>(task?.initial_data || "");
     const [attempt, setAttempt] = useState<AttemptInterface>();
 
@@ -42,18 +41,12 @@ export const Content: React.FC<CollabProps> = ({collab, user}) => {
         fetchTask();
     }, [collab]);
 
-    // Функция закрывает теоретический раздел
-    const toggleTheory = () => {
-        setIsTheory(!isTheory);
-    };
-
     // Отправляет запрос попытки выполнить задание
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault() // Предотвращаем перезагрузку страницы
         try {
             // Отправляем данные на сервер
             const response = await attemptService.execute(userAnswer, collab.hash, user.id)
-            console.log("ну вроде запрос отправился. Кстати вот итог: " + JSON.stringify(response))
             setAttempt(response);
         } catch (error) {
             console.error("Произошла ошибка:", error);
@@ -67,19 +60,6 @@ export const Content: React.FC<CollabProps> = ({collab, user}) => {
         }
     }, [task]);
 
-
-    // Попытка реализовать отправку сообщения при успешном выполнении задания
-    // const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     if (socketRef.current && content.trim()) {
-    //         const messageData = {
-    //             content,
-    //             userId: user.id,
-    //             collabId: collab.id
-    //         };
-    //         socketRef.current.emit('newMessage', messageData);
-    //     }
-    // };
 
     return (
         <div className={styles.content} id="container">
@@ -101,35 +81,31 @@ export const Content: React.FC<CollabProps> = ({collab, user}) => {
                         </BreadcrumbList>
                     </Breadcrumb>
                 </div>
-                <button className={"h-8 font-light mr-8 mt-2"}
-                        onClick={toggleTheory}>{isTheory ? 'Задание' : 'Теория'}</button>
             </div>
             <div className={"flex flex-col pl-4"}>
                 <div className={"flex flex-wrap text-2xl font-bold"}>{task?.name}
-
                 </div>
                 <p className={"flex text-gray-500 text-xs"}>Автор задания: {task?.author}</p>
             </div>
-            {!isTheory && (
-                <div>
-                    <div className={styles.task} dangerouslySetInnerHTML={{__html: task?.content || ''}}>
-                    </div>
-                    <div className={styles.result}>
-                        {/*<p className={"text-2xl font-bold mb-2 "}>Answer</p>*/}
-                        <form onSubmit={handleSubmit}>
-                            <CodeMirror
-                                value={userAnswer}
-                                className={"overflow-x-auto border bg-violet-200 rounded-2xl "}
-                                minHeight="100px"
-                                extensions={[javascript({jsx: true})]}
-                                onChange={(userAnswer) => {
-                                    setUserAnswer(userAnswer);
-                                }}
-                            />
-                            <button type="submit" className={"mt-2 w-16 text-sm h-8 font-light"}>Go</button>
-                        </form>
+            <div>
+                <div className={styles.task} dangerouslySetInnerHTML={{__html: task?.content || ''}}>
+                </div>
+                <div className={styles.result}>
+                    {/*<p className={"text-2xl font-bold mb-2 "}>Answer</p>*/}
+                    <form onSubmit={handleSubmit}>
+                        <CodeMirror
+                            value={userAnswer}
+                            className={"overflow-x-auto border bg-violet-200 rounded-2xl "}
+                            minHeight="100px"
+                            extensions={[javascript({jsx: true})]}
+                            onChange={(userAnswer) => {
+                                setUserAnswer(userAnswer);
+                            }}
+                        />
+                        <button type="submit" className={"mt-2 w-16 text-sm h-8 font-light"}>Go</button>
+                    </form>
 
-                        {(attempt) ? (
+                    {(attempt) ? (
                         <div className="result">
                             <p>
                                 <strong>Output:</strong> {attempt?.output}
@@ -138,20 +114,9 @@ export const Content: React.FC<CollabProps> = ({collab, user}) => {
                                 <strong>{attempt?.isPassed ? "Passed" : "Failed"}</strong>
                             </p>
                         </div>
-                            ) : (<div></div>)}
-                    </div>
+                    ) : (<div></div>)}
                 </div>
-            )}
-
-
-            {
-                isTheory && (
-                    <div>
-                        <div className={styles.theory}
-                             dangerouslySetInnerHTML={{__html: task?.TaskTheory[0].Theory.content || ''}}></div>
-                    </div>
-                )
-            }
+            </div>
         </div>
     )
 }

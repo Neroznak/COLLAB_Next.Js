@@ -1,4 +1,6 @@
-export default function Loading() {
+import * as React from "react";
+
+export default function Loading (){
     return (
         <div className="animate-pulse space-y-4 p-4">
             <div className="h-10 w-10 rounded-full bg-gray-300"></div>

@@ -71,7 +71,7 @@ export const Chat: React.FC<CollabProps> = ({collab, user}) => {
         setIsOpen(true)
         const referal = await referalService.create(collab.hash, user.id);
         const generatedReferal = referal.referal;
-        setReferalLink(`http://localhost:3001/collab/${collab.hash}?referal=${generatedReferal}`);
+        setReferalLink(`http://localhost:3001?referal=${generatedReferal}`);
     }
 
     // Отмотка сообщения вниз

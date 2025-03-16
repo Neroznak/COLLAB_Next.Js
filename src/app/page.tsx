@@ -2,9 +2,6 @@
 
 import styles from "@/app/Main.module.scss";
 import React, {useEffect, useState} from "react";
-import {QuoteInterface} from "@/shared/types/quote.interface";
-import {quoteService} from "@/services/quote.service";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
 import {collabService} from "@/services/collab.service";
 import abstr from "../../public/assets/images/collabster2.png"
 import Image from 'next/image';
@@ -12,30 +9,35 @@ import {FaTelegram, FaPatreon} from "react-icons/fa";
 
 
 export default function Home() {
-    const [quote, setQuote] = useState<QuoteInterface>();
-    // const [category, setCategory] = useState(""); // Категория
-    // const [difficulty, setDifficulty] = useState(""); // Сложность
-    // const [title, setTitle] = useState(""); // Тема
     const [userName, setUserName] = useState("");
+    const [referal, setReferal] = useState<string | null>(null);
 
-    // Получаем цитаты так, ибо в сервисе ассинхронная функция - её значение нужно доставать так
     useEffect(() => {
-        const fetchQuote = async () => {
-            try {
-                const fetchedQuote = await quoteService.findRandom();
-                if (Array.isArray(fetchedQuote)) {
-                    setQuote(fetchedQuote[0]); // Берём первый элемент массива
-                } else {
-                    setQuote(fetchedQuote); // Если вдруг вернулся объект
-                }
-            } catch (error) {
-                console.error("Ошибка при загрузке цитаты:", error);
-            }
-        };
-        fetchQuote();
+        const params = new URLSearchParams(window.location.search);
+        const ref = params.get("referal");
+        console.log("Referral from URL:", ref);
+        setReferal(ref);
     }, []);
 
-    // Функция кнопки "Начать занятие
+
+    useEffect(() => {
+        const isReferalExist = async () => {
+            if (referal) {
+                const response = await collabService.invite(referal);
+                const accessToken = response.accessToken;
+                console.log(response.collab.hash)
+                localStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('isNewUser', "true");
+                window.location.href = `/collab/${response.collab.hash}`;
+            }
+        };
+
+        isReferalExist(); // Вызов функции
+
+    }, [referal]); // Зависимость от referal
+
+
+// Функция кнопки "Начать занятие
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // Предотвращаем перезагрузку страницы
         const category = "TYPESCRIPT";
@@ -48,6 +50,7 @@ export default function Home() {
         window.location.href = `/collab/${response.collab.hash}`; // Редирект
     }
 
+
     return (
         <main className={styles.wrapper}>
             <div className={styles.container}>
@@ -56,19 +59,18 @@ export default function Home() {
                     <strong className={"ml-32 mt-4 text-sm"}>Предложить задание</strong>
                     <strong className={"ml-12 mt-4 text-sm"}>Идеи развития</strong>
                 </div>
-
                 <div className={styles.content}>
                     <div>
-                        <span className={styles.big_text_black}>Коллективное решение задач по </span>
-                        <span className={styles.big_text_blue}>TypeScript </span>
-                        {/*<span className={styles.big_text_black}>в группе </span>*/}
+                        <span className={styles.big_text_black}>Интерактивный тренажёр по </span>
+                        <span className={styles.big_text_blue}>TypeScript</span>
+                        <span className={styles.big_text_black}> в команде</span>
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className={"w-full flex flex-col mt-2"}>
                             <input className={styles.input} placeholder={"Введите Ваше имя"} type="text"
-
                                    onChange={(e) => setUserName(e.target.value)}/>
-                            <button type="submit" className={"mt-4 text-sm pt-2 w-44 pb-2 pl-8 pr-8 rounded-xl"}>Начать
+                            <button type="submit"
+                                    className={"mt-4 text-sm pt-2 w-44 pb-2 pl-8 pr-8 rounded-xl"}>Начать
                                 занятие
                             </button>
                         </div>
@@ -78,7 +80,6 @@ export default function Home() {
                     <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
                         <FaTelegram size={40} className="text-blue-500"/>
                     </a>
-
                     <a href="https://www.patreon.com/yourpage" target="_blank" rel="noopener noreferrer"
                        className={"ml-16"}>
                         <FaPatreon size={40} className="text-red-500"/>

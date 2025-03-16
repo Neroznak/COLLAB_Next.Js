@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
 import styles from "@/app/collab/[collabHash]/Collab.module.scss";
 import {useEffect, useState} from "react";
-import * as React from "react"
-import {useParams, useSearchParams} from "next/navigation";
+import * as React from "react";
+import {useParams} from "next/navigation";
 import {IUser} from "@/shared/types/user.interface";
 import {useProfile} from "@/hooks/useProfile";
 import {UserColorProvider} from "@/app/collab/[collabHash]/UserColorContext";
@@ -17,53 +17,65 @@ import Loading from "@/app/collab/[collabHash]/loading";
 
 export default function Collab() {
     const [nickName, setNickName] = useState("");
-    const {oldUser, isLoading} = useProfile() as { oldUser: IUser | null, isLoading: boolean };
-    const {collabHash} = useParams() as { collabHash: string };
-    const referal = useSearchParams().get("referal");
-    const [isUserNewUse, setIsUserNew] = useState<boolean>(false);
+    const {user, isLoading} = useProfile() as { user: IUser | null, isLoading: boolean };
     const [collab, setCollab] = useState<CollabInterface>();
-    const [user, setUser] = useState<IUser>();
+    const params = useParams();
+    const collabHash = Array.isArray(params?.collabHash) ? params.collabHash[0] : params?.collabHash || "";
+    const [isUserNew, setIsUserNew] = useState<string | null>(null);
+    const [isClient, setIsClient] = useState(false);  // Флаг для проверки клиента
 
+    // Проверяем, что мы на клиенте
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
+    // Загружаем данные из localStorage только на клиенте
+    useEffect(() => {
+        if (isClient) {
+            setIsUserNew(localStorage.getItem('isUserNew'));
+        }
+    }, [isClient]);
 
     // Получение данных страницы
     useEffect(() => {
-        const getPageData = async () => {
+        const getCollabData = async () => {
             try {
-                const {
-                    collab,
-                    user,
-                    isUserNew,
-                    accessToken
-                } = await collabService.getCollabForUsers(collabHash, oldUser?.id, referal);
-                if (isUserNew) localStorage.setItem("accessToken", accessToken);
-                setIsUserNew(isUserNew);
+                const collab = await collabService.getCollab(collabHash);
                 setCollab(collab);
-                setUser(user);
             } catch (error) {
                 console.error("Error fetching collab data:", error);
-            } finally {
             }
         };
-        if (!isLoading) getPageData();
+        if (!isLoading) getCollabData();
     }, [isLoading]);
 
-    if (!collab || !user) return Loading();
-
+    // Обновление имени пользователя
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        await userService.updateUserName(user.id, nickName);
-        setIsUserNew(false);
+        if (user) {
+            e.preventDefault();
+            await userService.updateUserName(user.id, nickName);
+            localStorage.setItem('isUserNew', "false");
+        }
     }
 
+    if (!isClient) {
+        return null; // Пока не клиент, не рендерим компонент
+    }
 
     return (
+
         <UserColorProvider>
             <main className={styles.wrapper}>
-                <Sidebar collab={collab} user={user}/>
-                <Content collab={collab} user={user}/>
-                <Chat collab={collab} user={user}/>
-                {isUserNewUse &&
+                {collab && user ? (
+                    <>
+                        <Sidebar collab={collab} user={user}/>
+                        <Content collab={collab} user={user}/>
+                        <Chat collab={collab} user={user}/>
+                    </>
+                ) : (
+                    <Loading/>
+                )}
+                {isUserNew == "true" &&
                     (<div
                         className="fixed inset-0 flex items-center justify-center bg-white border-b bg-opacity-50 z-50">
                         <div className="flex flex-col items-center justify-center">
@@ -84,5 +96,6 @@ export default function Collab() {
                     </div>)}
             </main>
         </UserColorProvider>
-    )
+
+    );
 }
